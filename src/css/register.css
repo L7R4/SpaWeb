@@ -1,0 +1,149 @@
+@font-face {
+    font-family: 'Golfmind';
+    src: url('/src/assets/fonts/Golfmind.ttf') format('truetype');
+}
+
+html {
+    font-size: 62.5%;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-feature-settings: "pnum" on, "lnum" on;
+    box-sizing: border-box;
+
+}
+
+.register {
+    background-color: #00584A;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.register-contenedor {
+    position: relative;
+    background-color: #55887B;
+    padding: 5rem;
+    border-radius: 8rem;
+    min-width: 63rem;
+    min-height: 27rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.user-image {
+    position: absolute;
+    top: -15%;
+    width: 10rem;
+
+}
+
+.register-contenedor form {
+    margin-top: 2rem;
+    min-width: 25rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+    font-size: 1.7rem;
+    color: white;
+}
+
+.register input[type="email"],
+.register input[type="password"],
+.register input[type="text"] {
+    background-color: #C2B2A2;
+    /* Color de fondo personalizado */
+    border: none;
+    /* Sin borde */
+    padding: 0.7rem;
+    /* Espacio interno */
+    border-radius: 0.8rem;
+    /* Bordes redondeados */
+    color: #00584A;
+    /* Color del texto */
+    font-size: 1.5rem;
+    /* Tamaño del texto */
+}
+
+.register input[type="email"]:focus,
+.register input[type="password"]:focus,
+.register input[type="text"]:focus {
+    outline: none;
+    /* Quita el contorno por defecto */
+    background-color: #C2B2A2;
+    /* Mantiene el color del fondo al hacer foco */
+}
+
+.register-boton-container {
+    display: flex;
+    justify-content: center;
+    flex-basis: 100%;
+}
+
+.boton-ingresar {
+    margin-top: 2rem;
+    text-decoration: none;
+    background-color: #F5C6B5;
+    color: #00584A;
+    border: none;
+    border-radius: 30px;
+    padding: 5px 20px;
+    transition: background-color 0.3s, color 0.3s;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+
+}
+
+.boton-ingresar:hover {
+    background-color: #00584A;
+    border-radius: 30px;
+    padding: 5px 20px;
+    color: #EDDED2;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.upload-pic {
+    background-color: #F5C6B5;
+    border-radius: 15rem;
+    height: 24rem;
+    width: 24rem;
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #00584A;
+    color: #fff;
+    border-radius: 3rem;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+}
+
+.custom-file-upload:hover {
+    background-color: #4a756b;
+}
+
+.mensaje-exito {
+    color: #00584A;
+    font-size: 1.2rem;
+}
+
+.mensaje-error {
+    color: red;
+    font-size: 1.2rem;
+}

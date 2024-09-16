@@ -1,0 +1,240 @@
+@font-face {
+    font-family: 'Golfmind';
+    src: url('../../src/assets/fonts/Golfmind.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('../../src/assets/fonts/Poppins-Regular.ttf') format('truetype');
+}
+
+html {
+    font-size: 62.5%;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-feature-settings: "pnum" on, "lnum" on;
+    box-sizing: border-box;
+    font-family: 'Poppins';
+
+}
+
+
+header>.wrapperLinkLogo {
+    text-decoration: none;
+    cursor: pointer;
+
+}
+
+header {
+    background-color: #EDDED2;
+    padding: 20px;
+    display: flex;
+    /* position: fixed;
+    z-index: 1000; */
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 12vh;
+    min-height: 70px;
+    max-height: 90px;
+}
+
+*::-webkit-scrollbar {
+    width: 4px;
+    border-radius: 5px;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: #24252590;
+    border-radius: 1rem;
+}
+
+.wrapperLinkLogo>.logo-title {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.wrapperLinkLogo>.logo-title>h1 {
+    font-family: 'Golfmind', sans-serif;
+    color: #00584A;
+    font-size: clamp(25px, 2.8vw, 40px);
+    font-weight: 400;
+}
+
+.wrapperLinkLogo>.logo-title>.logo {
+    width: 5vw;
+    max-width: 100px;
+    min-width: 60px;
+}
+
+nav>ul {
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+}
+
+nav>ul>li {
+    padding: 5px 15px;
+    border-radius: 30px;
+    text-decoration: none;
+    color: #00584A;
+    font-weight: 400;
+    font-size: clamp(13px, 1.5vw, 18px);
+    cursor: pointer;
+    transition: background-color 0.1s, color 0.1s;
+}
+
+nav>ul>li:hover {
+    background-color: #00584A;
+    color: #EDDED2;
+}
+
+
+nav>ul>li#itemLogin {
+    background-color: #F5C6B5;
+    color: #00584A;
+    font-weight: 700;
+    transition: background-color 0.1s, color 0.1s;
+    cursor: pointer;
+
+}
+
+nav>ul>li#itemLogin:hover {
+    background-color: #00584A;
+    color: #F5C6B5;
+}
+
+/* #endregion */
+
+/*#region FOOTER*/
+.footer {
+    background-color: #00584A;
+    display: flex;
+    column-gap: 27rem;
+    align-items: center;
+    color: #F5C6B5;
+    padding: 2rem 5rem 2rem 5rem;
+    border-top: 0.1rem solid;
+}
+
+.footer-logo {
+    height: 10rem;
+}
+
+.footer-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-section:nth-child(3) {
+    margin-left: auto;
+}
+
+.footer-section h3 {
+    font-size: 1.6rem;
+    margin-top: 1rem;
+}
+
+.social-icons a img {
+    height: 5rem;
+    padding: 1rem;
+}
+
+.footer-section-mail {
+    display: flex;
+    flex-direction: row;
+    font-size: 1.5rem;
+}
+
+.footer-section-mail img {
+    height: 2rem;
+    margin-right: 0.3rem;
+}
+
+.footer-links {
+    list-style-type: none;
+    font-size: 1.5rem;
+}
+
+.footer div ul li {
+    margin-bottom: 1rem;
+    text-align: right;
+}
+
+.footer-links-elemento {
+    text-decoration: none;
+    font-weight: 400;
+    color: #F5C6B5;
+}
+
+/*#endregion  */
+
+/* #region menu Profile */
+
+
+.user-profile {
+    position: relative;
+    cursor: pointer;
+}
+
+.user-menu {
+    position: absolute;
+    background-color: #fff;
+    /* border: 2px solid #fff; */
+    border-radius: 5px;
+    padding: 15px;
+    list-style-type: none;
+    top: 100%;
+    /* Ajusta según sea necesario */
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-menu>li {
+    text-decoration: none;
+    color: #00584A;
+    font-weight: 400;
+    font-size: clamp(13px, 1.3vw, 16px);
+    white-space: nowrap;
+
+}
+
+.user-menu>li:hover {
+    text-decoration: underline;
+}
+
+#buttonLogout {
+    background-color: #00584A;
+    color: #EDDED2;
+    font-weight: 700;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+/* #endregion */
+
+.swal2-popup * {
+    font-size: clamp(14px, 1.1vw, 17px) !important;
+
+}
+
+.swal2-popup #swal2-title {
+    font-size: clamp(16px, 1.6vw, 22px) !important;
+}
+
+.swal2-popup .swal2-icon-content {
+    font-size: clamp(18px, 1.6vw, 25px) !important;
+}

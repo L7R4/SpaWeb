@@ -1,0 +1,126 @@
+/* Eliminamos el padding del body para evitar el borde blanco */
+body {
+    margin: 0;
+    background-color: #EDDED2;
+    /* Mismo fondo que el #root */
+}
+
+#root {
+    height: 88vh;
+    background-color: #EDDED2;
+    /* Fondo */
+    /* padding: 20px; */
+    /* Espacio dentro del contenedor */
+    overflow: auto;
+    /* margin: 20px; */
+    /* Margen externo para separar el contenedor de los bordes */
+    border-radius: 8px;
+    /* Borde redondeado */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    /* Sombra ligera para destacarlo */
+}
+
+#root::-webkit-scrollbar {
+    width: 6px;
+    border-radius: 5px;
+}
+
+#root::-webkit-scrollbar-thumb {
+    background: #00584A;
+    border-radius: 1rem;
+}
+
+#root::-webkit-scrollbar-thumb:hover {
+    background: #24252590;
+    scale: 1.05;
+}
+
+#root>h1 {
+    color: #00584A;
+    font-size: clamp(2rem, 2.1vw, 3rem);
+    margin-bottom: 20px;
+}
+
+#root>form {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    align-items: center;
+    border: 1px solid #33333386;
+}
+
+#root>form>.inputsWrapper {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+}
+
+#root>form input {
+    width: 23%;
+    padding: 8px;
+    outline: none;
+    border-radius: 8px;
+    border: #00584A 2px solid;
+    font-family: "Poppins";
+    font-size: clamp(10px, 1vw, 15px);
+    background-color: transparent;
+}
+
+ul.wrapperListServices {
+    list-style: none;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+ul.wrapperListServices>li {
+    border: #00584A 2px solid;
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+
+ul.wrapperListServices>li>div.coreInfoContainer {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+ul.wrapperListServices>li>div.coreInfoContainer>div.containerInfo {
+    width: 23%;
+    color: #005849e1;
+    font-size: clamp(10px, 0.9vw, 15px);
+}
+
+ul.wrapperListServices>li>button {
+    background-color: #00584A;
+    color: #EDDED2;
+    padding: 3px 10px;
+    border-radius: 8px;
+    font-size: clamp(10px, 1vw, 15px);
+    cursor: pointer;
+    outline: none;
+    border-color: transparent;
+    font-family: "Poppins";
+    height: fit-content;
+}
+
+#buttonSubmitServicio {
+    background-color: #00584A;
+    color: #EDDED2;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: clamp(10px, 1vw, 15px);
+    cursor: pointer;
+    outline: none;
+    border-color: transparent;
+    font-family: "Poppins";
+    height: fit-content;
+    white-space: nowrap;
+}

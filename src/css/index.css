@@ -1,0 +1,262 @@
+@font-face {
+    font-family: 'Golfmind';
+    src: url('/src/assets/fonts/Golfmind.ttf') format('truetype');
+}
+
+html {
+    font-size: 62.5%;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-feature-settings: "pnum" on, "lnum" on;
+    box-sizing: border-box;
+
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+.index h2 {
+    font-family: 'Golfmind', sans-serif;
+    font-size: 6rem;
+    font-weight: 400;
+}
+
+/*SECCION - HOME*/
+.seccion-home {
+    background-image: url('/src/assets/fondoInicio.svg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.seccion-home-contenedor {
+    background-color: #EDDED2;
+    padding: 2.5rem;
+    border-radius: 50px;
+    max-width: 40%;
+    max-height: fit-content;
+    opacity: 70%;
+    color: #00584A;
+    text-align: justify;
+    margin-left: 6rem;
+}
+
+.seccion-home-titulo,
+.seccion-quienesSomos-titulo,
+.seccion-servicios-titulo,
+.seccion-ubicacion-titulo {
+    text-align: center;
+    font-size: clamp(30px, 4vw, 70px);
+    font-family: 'Golfmind', sans-serif;
+    font-weight: 500;
+}
+
+.seccion-home-parrafo,
+.seccion-quienesSomos-parrafo {
+    font-size: clamp(15px, 1.8vw, 20px);
+    padding: 2.5rem;
+    padding-top: 0;
+}
+
+
+/*SECCION - QUIENES SOMOS*/
+.seccion-quienesSomos {
+    background-image: url('/src/assets/fondoQuienesSomos.svg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    column-gap: 15rem;
+}
+
+.seccion-quienesSomos-contenedor {
+    color: #EDDED2;
+    text-align: center;
+}
+
+.seccion-quienesSomos-parrafo {
+    font-size: 1.9rem;
+    max-width: 46rem;
+    text-align: justify;
+}
+
+/*SECCION - SERVICIOS*/
+.seccion-servicios {
+    background-color: #EDDED2;
+    /* min-height: 100vh; */
+    padding: 1rem;
+    margin-top: -50px;
+    position: relative;
+    z-index: 2;
+}
+
+.seccion-servicios-titulo {
+    color: #00584A;
+    /* font-size: 2.5rem; */
+    text-align: center;
+    padding: 2rem;
+    padding-bottom: 0;
+}
+
+/*SECCION - UBICACION*/
+.seccion-ubicacion {
+    background-color: #00584A;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+
+}
+
+.seccion-ubicacion-contenedor {
+
+    min-width: 60rem;
+    width: 50%;
+    gap: 2rem;
+    background-color: #F5C6B5;
+    border-radius: 2rem;
+    display: flex;
+    align-items: center;
+}
+
+.seccion-ubicacion-contenedor>div.ubicacion-contenedor {
+    height: 20vw;
+    width: 50%;
+    min-height: 300px;
+    max-height: 550px;
+}
+
+.seccion-ubicacion-contenedor>div.ubicacion-parrafo-contenedor {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.seccion-ubicacion-contenedor>div.ubicacion-parrafo-contenedor>div.parrafo_wrapper {
+    width: 80%;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+}
+
+.seccion-ubicacion-contenedor>div.ubicacion-parrafo-contenedor>div.parrafo_wrapper>p {
+    font-size: clamp(1.6rem, 2vw, 2.6rem);
+    color: #00584A;
+    font-weight: 600;
+    width: 70%;
+    text-align: center;
+}
+
+.ubicacion-contenedor {
+    border: 2px solid #ffffffc8;
+    border-radius: 2rem;
+    overflow: hidden;
+}
+
+.ubicacion-parrafo-contenedor>.redes_sociales_icons_wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 10%;
+}
+
+
+
+.ubicacion-contenedor>#ubicacionMap {
+    width: 100%;
+    height: 100%;
+}
+
+.seccion-ubicacion-titulo {
+    color: #F5C6B5;
+
+}
+
+.seccion-ubicacion-parrafo {
+    max-width: 20rem;
+    font-size: 2rem;
+    color: #00584A;
+    font-weight: 600;
+
+}
+
+.slider-container {
+    margin: 6rem;
+}
+
+.card-container {
+    background-color: #F5C6B5;
+    padding: 2rem;
+    max-height: 35rem;
+    max-width: 30rem;
+    border-top-left-radius: 13rem;
+    border-top-right-radius: 13rem;
+    border-bottom-left-radius: 3rem;
+    border-bottom-right-radius: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.card-title-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card-image {
+    width: 100%;
+    height: auto;
+    max-height: 25rem;
+    object-fit: cover;
+    border-top-left-radius: 11rem;
+    border-top-right-radius: 11rem;
+    border-bottom-left-radius: 2rem;
+    border-bottom-right-radius: 2rem;
+}
+
+.card-title {
+    color: #00584A;
+    padding: 1rem;
+    font-size: 2.2rem;
+}
+
+.slick-slide>div {
+    margin: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.seccion-video {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #EDDED2;
+    padding: 2rem;
+}
+
+.video-frame {
+    border-radius: 5rem;
+}

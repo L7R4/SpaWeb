@@ -1,0 +1,365 @@
+/* General Styles */
+body {
+  font-family: 'Poppins', sans-serif; /* Fuente principal */
+  background-color: #fcebe6; /* Fondo rosado claro */
+  margin: 0;
+  padding: 0;
+  color: #333; /* Color de texto general */
+}
+
+.contenedorPadre-noticias {
+  display: grid;
+  padding: 100px; /* Espaciado alrededor del contenedor de noticias */
+  background-color: #EDDED2; /* Fondo del contenedor de noticias */
+  justify-content: center; /* Centra el contenedor de noticias horizontalmente */
+  align-items: center; /* Centra el contenedor de noticias verticalmente */
+}
+
+/* News Card Container */
+.noticia-card {
+  display: flex;
+  flex-direction: column;
+  background-color: #EDDED2; /* Fondo de la tarjeta de noticia */
+  width: 700px;
+  border-radius: 12px; /* Bordes redondeados */
+  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  margin-bottom: 40px; /* Espaciado inferior entre tarjetas */
+  padding-bottom: 10px;
+}
+
+/* Title */
+.noticia-card h3 {
+  padding: 30px;
+  text-align: center; /* Alineación del texto al centro */
+  background-color: #00584A; /* Fondo del título */
+  font-size: clamp(2.8rem, 2.5vw, 4rem); /* Tamaño del título */
+  color: #EDDED2; /* Color del texto del título */
+  margin: 0;
+  border-top-left-radius: 12px; /* Bordes redondeados en la esquina superior izquierda */
+  border-top-right-radius: 12px; /* Bordes redondeados en la esquina superior derecha */
+}
+
+/* Content Container */
+.noticia-contenido {
+  display: flex;
+  align-items: flex-start; /* Alineación del contenido al inicio del contenedor */
+  margin: 20px 10px 0; /* Espaciado alrededor del contenedor de contenido */
+  padding: 20px;
+  flex-wrap: wrap; /* Permite que los elementos se envuelvan */
+}
+
+.noticia-contenido p {
+  color: #00584A; /* Color del texto */
+  flex: 1;
+  font-size: clamp(1.5rem, 1.3vw, 2rem); /* Tamaño del título */
+
+  line-height: 1.5;
+  margin-right: 25px; /* Espaciado derecho entre el texto y la imagen */
+  min-width: 0; /* Permite ajuste del texto sin desbordamiento */
+  word-wrap: break-word; /* Rompe el texto largo */
+}
+
+.noticia-contenido img {
+  width: 200px;
+  height: 200px;
+  background-color: #EDDED2; /* Fondo de la imagen */
+  border-radius: 10px; /* Bordes redondeados de la imagen */
+  object-fit: cover; /* Ajusta la imagen para cubrir el área */
+  flex-shrink: 0; /* Previene la reducción de tamaño */
+}
+
+/* Action Buttons Container */
+.noticia-actions {
+  padding: 20px;
+  text-align: center; /* Centra los botones */
+}
+
+.noticia-actions button {
+  background-color: #00584A; /* Fondo del botón */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px; /* Bordes redondeados del botón */
+  cursor: pointer;
+  margin: 0 5px; /* Espaciado horizontal entre botones */
+  transition: background-color 0.3s ease; /* Transición de color al pasar el ratón */
+}
+
+.noticia-actions button:hover {
+  background-color: #005849b4; /* Color más oscuro al pasar el ratón */
+}
+
+/* Comments Container */
+.comentarios-container {
+  background-color: #EDDED2; /* Fondo de la sección de comentarios */
+  padding: 20px;
+  padding-right: 40px; /* Espaciado adicional para la barra de desplazamiento */
+  margin: 0 10px; /* Espaciado horizontal entre la sección de comentarios y el borde */
+  text-align: left; /* Alineación del texto a la izquierda */
+  position: relative; /* Necesario para posicionar la barra de desplazamiento dentro */
+  max-height: 120px; /* Altura máxima con desplazamiento */
+  overflow-y: scroll; /* Habilita el desplazamiento vertical */
+}
+
+/* Title for Comments */
+.h2-comentarios {
+  padding-left: 20px;
+  font-size: clamp(1.5rem, 1.3vw, 2rem); /* Tamaño del título */
+
+  font-weight: 600;
+  color: #00584A; /* Color del título de comentarios */
+}
+
+/* Individual Comments */
+.comentario {
+  display: flex;
+  gap:15px;
+  align-items: flex-start; /* Alineación del contenido al inicio del contenedor */
+  margin-bottom: 15px; /* Espaciado inferior entre comentarios */
+}
+
+.comentario img {
+  width: 3.3vw;
+  min-width: 30px;
+  border-radius: 50%; /* Bordes redondeados de la imagen */
+}
+
+.comentario-texto {
+  flex-grow: 1; /* Permite que el texto ocupe el espacio disponible */
+}
+
+.comentario-texto h5 {
+  font-size: clamp(13px, 1.1vw, 16px);
+  font-weight: 600;
+  margin: 0;
+  color: #00584A; /* Color del título del comentario */
+}
+
+.comentario-texto p {
+  font-size: clamp(12px, 1vw, 14px);
+
+  color: #00584A; /* Color del texto del comentario */
+  margin: 2px 0 0; /* Espaciado superior entre el título y el texto */
+}
+
+/* Custom Scrollbar (WebKit Browsers) */
+.comentarios-container::-webkit-scrollbar {
+  width: 10px; /* Ancho de la barra de desplazamiento */
+}
+
+.comentarios-container::-webkit-scrollbar-track {
+  background-color: #948071; /* Color de la pista de desplazamiento */
+  border-radius: 10px; /* Bordes redondeados para la pista */
+}
+
+.comentarios-container::-webkit-scrollbar-thumb {
+  width: 8px; /* Ancho del pulgar */
+  height: 8px; /* Alto del pulgar */
+  background-color: #00584A; /* Color del pulgar */
+  border-radius: 10px; /* Bordes redondeados del pulgar */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Sombra sutil del pulgar */
+}
+
+.comentarios-container::-webkit-scrollbar-thumb:hover {
+  background-color: #948071; /* Color más oscuro al pasar el ratón */
+}
+
+/* Comment Input */
+.comentario-input {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  padding: 0 30px; /* Espaciado horizontal */
+}
+
+.comentario-input input {
+  background-color: #EDDED2; /* Fondo del campo de entrada */
+  flex-grow: 1; /* Ocupa el espacio disponible */
+  padding: 8px;
+  border-radius: 8px; /* Bordes redondeados del campo */
+  border: 1px solid #00584A; /* Borde del campo */
+  outline: none;
+  font-size: clamp(13px, 1.1vw, 15px);
+  color: #00584A; /* Color del texto */
+}
+
+.comentario-input button {
+  background-color: transparent;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: background-color 0.3s ease;
+}
+
+/* Modal Background */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7); /* Fondo oscuro transparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  backdrop-filter: blur(5px); /* Efecto de desenfoque en el fondo */
+}
+
+/* Modal Animation */
+@keyframes slide-down {
+  from {
+    transform: translateY(-30%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Modal Container */
+.modal-content {
+  background: #fcebe6; /* Fondo blanco para contraste */
+  padding: 40px;
+  border-radius: 20px; /* Bordes redondeados */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más suave */
+  max-width: 500px; /* Ancho máximo del modal */
+  width: 100%;
+  position: relative;
+  text-align: left; /* Texto alineado a la izquierda */
+  animation: slide-down 0.3s ease; /* Animación de entrada */
+  transition: transform 0.3s ease-in-out;
+}
+
+.modal-content h1 {
+  font-size: clamp(15px, 1.5vw, 20px);
+  margin-bottom: 20px;
+  text-align: center; /* Alineación del texto al centro */
+  color: #00584A; /* Color del título del modal */
+}
+
+/* Input Styles in Modal */
+.modal-content input,
+.modal-content textarea {
+  width: 100%;
+  padding:9px; /* Espaciado interno */
+  margin-bottom: 15px; /* Espaciado inferior */
+  border: 1px solid #005849a4; /* Borde del campo */
+  background-color: transparent; /* Fondo suave */
+  border-radius: 8px; /* Bordes redondeados */
+  font-size: clamp(13px, 1.3vw, 1.7px);
+  font-family: 'Poppins', sans-serif;
+  color: #333; /* Color del texto */
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.modal-content input:focus,
+.modal-content textarea:focus {
+  border-color: #005849; /* Color del borde al enfocar */
+}
+
+/* Close Button */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  
+  right: 10px;
+  background-color: #333; /* Fondo del botón de cerrar */
+  color: #fcebe6;
+  border: none;
+  font-size: clamp(13px, 1.3vw, 1.7px);
+  font-family: 'Poppins', sans-serif;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.1s ease;
+}
+
+.close-btn:hover {
+  color: #fff;
+  transform: scale(1.02); /* Efecto de zoom */
+}
+
+/* Modal Action Buttons */
+.modal-actions {
+  display: flex;
+  justify-content: space-between; /* Espaciado entre los botones */
+  margin-top: 20px; /* Espaciado superior */
+}
+
+.button {
+  background-color: #00584A; /* Fondo del botón */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px; /* Bordes redondeados */
+  font-size: clamp(13px, 1.1vw, 15px);
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.button:hover {
+  background-color: #005849b4; /* Fondo al pasar el ratón */
+  transform: scale(1.05); /* Efecto de zoom */
+}
+
+/* Button for New Item */
+.botonNuevo {
+  margin-left: auto;
+  font-size: clamp(13px, 1.1vw, 15px);
+  font-family: 'Poppins', sans-serif;
+  margin-right: auto;
+  background-color: #00584A; /* Fondo del botón */
+  margin-bottom: 20px; /* Espaciado inferior */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px; /* Bordes redondeados */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.botonNuevo:hover {
+  background-color: #005849b4; /* Fondo al pasar el ratón */
+  transform: scale(1.05); /* Efecto de zoom */
+}
+
+/* Formulario de Noticias */
+.formulario-noticias {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch; /* Asegura que los elementos llenen el contenedor */
+}
+
+/* Custom File Upload Button */
+.custom-file-upload {
+  padding: 8px;
+  border-radius: 5px; /* Bordes redondeados */
+  background: #005849e1; /* Fondo del botón */
+  color: white;
+  cursor: pointer;
+  text-align: center; /* Texto centrado */
+  margin-bottom: 20px; /* Espaciado inferior */
+  font-size: clamp(13px, 1.1vw, 15px);
+  font-family: 'Poppins', sans-serif;
+}
+
+.custom-file-upload input {
+  display: none; /* Oculta el input de archivo */
+}
+
+/* Form Footer */
+.form-footer {
+  display: flex;
+  justify-content: center; /* Centra el botón */
+  margin-top: 20px; /* Espaciado superior */
+}

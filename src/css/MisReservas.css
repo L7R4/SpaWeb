@@ -1,0 +1,65 @@
+/* MisReservas.css */
+body {
+    overflow: auto;
+    margin: 0;
+    padding: 0; /* Asegura que el body no tenga padding que podría causar problemas de diseño */
+}
+
+#misReservas {
+    background-color: #EDDED2; /* Fondo */
+    max-width: 800px;
+    margin: 0 auto;
+    border-radius: 8px;
+    padding: 20px; /* Añadir padding para mayor espacio interno */
+    margin-bottom: 20px; /* Añadir margen inferior para crear espacio con el footer */
+}
+
+h2 {
+    text-align: center;
+    color: #00584A;
+    font-size: clamp(1.5rem, 2vw, 2rem);
+    margin-bottom: 20px;
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto; /* Permite el desplazamiento horizontal si es necesario */
+    margin-bottom: 40px; /* Añadir margen inferior adicional para asegurar espacio con el footer */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+thead {
+    background-color: #00584A;
+    color: #EDDED2;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    font-size: clamp(12px, 1.2vw, 16px);
+}
+
+td {
+    font-size: clamp(10px, 1vw, 14px);
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tfoot {
+    background-color: #00584A;
+    color: #EDDED2;
+    font-size: clamp(10px, 1vw, 14px); /* Tamaño de fuente consistente */
+}

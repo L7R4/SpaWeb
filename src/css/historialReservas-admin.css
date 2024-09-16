@@ -1,0 +1,85 @@
+/* #root {
+    height: 88vh;
+    background-color: #EDDED2;
+} */
+
+.empleo-admin {
+    /* background-color: #aa7e7e; */
+    padding: 20px;
+    border-radius: 10px;
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+    width: 80%;
+    /* max-width: 900px; */
+}
+
+.empleo-admin h1 {
+    color: #00584A;
+    font-size: clamp(2rem, 2.1vw, 3rem);
+    margin-bottom: 20px;
+    /* text-align: center; */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #FFFFFF;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+thead {
+    background-color: #00584A;
+    color: #FFFFFF;
+}
+
+th,
+td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #55887B;
+}
+
+td {
+    font-size: clamp(1.2rem, 1.1vw, 1.5rem);
+    /* cursor: pointer; */
+}
+
+td>ul {
+    list-style-type: none;
+}
+
+th {
+    font-size: clamp(1.5rem, 1.3vw, 1.8rem);
+
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f5c6b56c;
+    /* Color alternativo para filas */
+}
+
+
+button {
+    background-color: #00584A;
+    color: #FFFFFF;
+    border: none;
+    font-family: 'Poppins', sans-serif;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.1s ease;
+    font-size: clamp(1.2rem, 1vw, 1.4rem);
+
+}
+
+button:hover {
+    background-color: #55887B;
+}
+
+td[colspan="3"] {
+    text-align: center;
+    font-style: italic;
+    color: #00584A;
+}
