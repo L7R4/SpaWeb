@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Home } from "./pages/home";
 import Noticias from "./components/noticias/Noticias";
 import { Login } from "./components/Login";
+import { Register } from "./components/Register";
 import { Turnos } from "./components/turnos/Turno_client";
 import { ReservasAdmin } from "./components/HistorialReservas-admin";
 import { MisReservas } from "./components/MisReservas-cliente";
@@ -25,6 +26,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/noticias" element={<Noticias />} />
           <Route path="/iniciar_sesion" element={<Login />} />
+          <Route path="/registrase" element={<Register />} />
+
           <Route path="/reservas" element={<Turnos />} />
           <Route path="/gestion_reservas" element={<ReservasAdmin />} />
           <Route path="/mis_reservas" element={<MisReservas />} />

@@ -1,4 +1,3 @@
-import 'css/login.css';
 import userIcon from '../assets/icons/iconoUser.svg';
 import { useForm } from 'react-hook-form';
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
@@ -40,7 +39,7 @@ export function Login() {
 
                         <div className="register-link">
                             <p>¿No tenes cuenta?</p>
-                            <a href="register.html">Registrate</a>
+                            <a className="linkRegister" onClick={() => { navigate("/registrase"); }}>Registrate aqui</a>
                         </div>
 
                         <div className="login-boton-container">
