@@ -85,6 +85,7 @@ export function Turnos() {
     };
 
     const addService = (service) => {
+        console.log(service)
         const serviceExists = services.some((s) => s.nombre === service.nombre);
         if (serviceExists) {
             const updatedServices = services.filter((s) => s.nombre !== service.nombre);
@@ -94,6 +95,7 @@ export function Turnos() {
 
             setServices([...services, { ...service, isSelected: true }]);
         }
+        console.log(services)
     }
 
     const totalCost = services.reduce((acc, service) => acc + parseInt(service.precio), 0);
@@ -218,7 +220,7 @@ export function Turnos() {
                         )}
                         <ul>
                             {services.map(sv =>
-                                <ServicioSelected key={sv.nombre} nombre={sv.nombre} precio={sv.precio} deleteServiceEvent={() => deleteService(sv.nombre)} />
+                                <ServicioSelected key={sv.nombre} profesional={sv.profesional} nombre={sv.nombre} precio={sv.precio} deleteServiceEvent={() => deleteService(sv.nombre)} />
                             )}
 
                             {services.length === 0 ? (
@@ -258,7 +260,6 @@ export function Turnos() {
 }
 
 function Servicio({ nombre, precio, profesional, isSelected, addServiceEvent }) {
-    console.log(isSelected)
     return (
         <li className={`serviceItem ${isSelected ? "selected" : ""}`}>
             {/* <h2>{isSelected}</h2> */}
@@ -276,7 +277,7 @@ function Servicio({ nombre, precio, profesional, isSelected, addServiceEvent }) 
                     <h3>{profesional}</h3>
                 </div>
             </div>
-            <button className="buttonAdd" onClick={() => addServiceEvent({ nombre, precio, isSelected })}>{isSelected ? "Quitar" : "Agregar"}</button>
+            <button className="buttonAdd" onClick={() => addServiceEvent({ profesional, nombre, precio, isSelected })}>{isSelected ? "Quitar" : "Agregar"}</button>
         </li>
     )
 }

@@ -10,6 +10,7 @@ import { ReservasAdmin } from "./components/HistorialReservas-admin";
 import { MisReservas } from "./components/MisReservas-cliente";
 import { EmpleoAdmin } from "./components/Empleo-admin";
 import { UsuarioAdmin } from "./components/Usuario-admin";
+import { ListadoClientes } from "./components/ListadoClientes";
 import { ServicioAdmin } from "./components/Servicio-admin";
 import { Empleo } from "./components/Empleo";
 
@@ -35,6 +36,8 @@ function App() {
           <Route path="/solicitudes_empleo" element={<EmpleoAdmin />} />
           <Route path="/usuarios" element={<UsuarioAdmin />} />
           <Route path="/servicios" element={<ServicioAdmin />} />
+          <Route path="/listado_clientes" element={<ListadoClientes />} />
+
 
         </Routes>
 

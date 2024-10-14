@@ -91,6 +91,8 @@ export function UsuarioAdmin() {
                                     >
                                         <option value="Cliente">Cliente</option>
                                         <option value="Administrador">Administrador</option>
+                                        <option value="Profesional">Profesional</option>
+                                        <option value="Secretaria">Secretaría</option>
                                     </select>
                                 </td>
                             </tr>
