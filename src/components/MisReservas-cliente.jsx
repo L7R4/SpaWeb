@@ -4,6 +4,7 @@ import { db } from '../../credentials';  // Importar Firestore desde credentials
 import useUsuario from '../hooks/useUsuario';  // Importar el hook personalizado
 import { Header } from './Header.jsx';
 import { Footer } from './Footer.jsx';
+import  Sidebar  from './Sidebar/SideBar.jsx';
 
 export function MisReservas() {
     const usuario = useUsuario();  // Usar el hook personalizado
@@ -61,7 +62,7 @@ export function MisReservas() {
 
     return (
         <>
-            <Header />
+            <Sidebar />
             <div id="misReservas">
                 <h2>Mis Reservas</h2>
                 <div className="table-container">

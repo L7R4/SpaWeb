@@ -1,5 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import  Sidebar  from './Sidebar/SideBar.jsx';
 
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { getFirestore , doc, setDoc} from 'firebase/firestore';
@@ -49,7 +50,7 @@ export function Register() {
 
     return (
         <>
-        <Header />
+        <Sidebar />
         <section className="register">
             <div className="register-contenedor">
                 <img src={userIcon} className="user-image" alt="User Icon" />

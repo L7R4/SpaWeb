@@ -2,6 +2,7 @@ import userIcon from '../assets/icons/iconoUser.svg';
 import { useForm } from 'react-hook-form';
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import { useNavigate } from "react-router-dom";
+import  Sidebar  from './Sidebar/SideBar.jsx';
 
 import { Header } from './Header.jsx';
 import { Footer } from './Footer.jsx';
@@ -27,7 +28,7 @@ export function Login() {
     }
     return (
         <>
-            <Header />
+            <Sidebar />
             <section className="login">
                 <div className="login-contenedor">
                     <img src={userIcon} className="user-image" alt="User Icon" />

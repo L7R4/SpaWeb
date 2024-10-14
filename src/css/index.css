@@ -93,6 +93,9 @@ body {
     max-width: 46rem;
     text-align: justify;
 }
+.seccion-quienesSomos-titulo {
+    color: #EDDED2;
+}
 
 /*SECCION - SERVICIOS*/
 .seccion-servicios {
