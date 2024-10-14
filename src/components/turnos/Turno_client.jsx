@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 // Componentes
 import { Header } from '../Header.jsx';
 import { Footer } from '../Footer.jsx';
+import  Sidebar  from '../Sidebar/SideBar.jsx';
 
 import { DateCalendarMultipleSelect } from "./Calendar.jsx";
 import { HorarioSelect } from "./HorarioSelect.jsx";
@@ -197,7 +198,7 @@ export function Turnos() {
 
     return (
         <>
-            <Header />
+            <Sidebar />
             <div className="wrapper">
                 <div className="listServiciosContainer">
                     <h1 className="seccionTittle">Servicios</h1>

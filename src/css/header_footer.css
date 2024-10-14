@@ -55,7 +55,7 @@ header {
 .wrapperLinkLogo>.logo-title {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 20px;
 }
 
 .wrapperLinkLogo>.logo-title>h1 {
@@ -69,6 +69,7 @@ header {
     width: 5vw;
     max-width: 100px;
     min-width: 60px;
+    margin-left: 3rem;
 }
 
 nav>ul {

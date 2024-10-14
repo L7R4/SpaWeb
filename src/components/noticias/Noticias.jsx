@@ -6,6 +6,7 @@ import FormularioNoticias from './FormularioNoticias';
 import Modal from './Modal';
 import { Header } from '../Header.jsx';
 import { Footer } from '../Footer.jsx';
+import  Sidebar  from '../Sidebar/SideBar.jsx';
 
 import useUsuario from '../../hooks/useUsuario';
 
@@ -55,7 +56,7 @@ const Noticias = () => {
 
   return (
     <>
-      <Header />
+      <Sidebar />
       <div className='contenedorPadre-noticias'>
         {usuario && usuario.rangoUser == 'Administrador' && (
           <button className='botonNuevo' onClick={agregarNoticia}>Agregar Noticia</button>
