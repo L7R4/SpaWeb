@@ -35,8 +35,7 @@ export function Register() {
                 nombreCompleto: nombreCompleto
             });
             
-            // setMensaje('¡Registro exitoso!');
-            navigate("/");
+            navigate("/reservas");
 
             setMensajeError('');
             clearErrors();

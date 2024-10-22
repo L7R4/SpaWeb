@@ -1,25 +1,13 @@
-
-/* .empleo-admin {
-    padding: 20px;
-    border-radius: 10px;
-    width: 80%;
-}
-
-.empleo-admin h1 {
-    color: #00584A;
-    font-size: clamp(2rem, 2.1vw, 3rem);
-    margin-bottom: 20px;
-} */
-.reservas-admin {
+.pagos-admin {
     padding: 2rem;
     width: 100%;
 }
-.reservas-admin > h1{
+.pagos-admin > h1{
     color: #00584A;
     font-size: clamp(3rem, 2.4vw, 4.5rem);
 }
 
-.reservas-admin > .filtros{
+.pagos-admin > .filtros{
     display: flex;
     padding: 1rem;
     border: 2px solid #00584A;
@@ -30,17 +18,17 @@
     margin-bottom: 2rem;
 }
 
-.reservas-admin > .filtros > div{
+.pagos-admin > .filtros > div{
     display: flex;
     flex-direction: column;
 }
 
-.reservas-admin > .filtros > div > label{
+.pagos-admin > .filtros > div > label{
     font-size: clamp(1.4rem, 1.2vw, 1.7rem);
     color: #00584A;
     font-weight: 600;
 }
-.reservas-admin > .filtros > div input[type="text"]{
+.pagos-admin > .filtros > div input[type="text"]{
     background-color: transparent;
     color: #00584A;
     border: 1px solid #00584A;
@@ -50,7 +38,7 @@
     font-size: clamp(1.4rem, 1.2vw, 1.7rem);
 }
 
-.reservas-admin > .filtros > div > select {
+.pagos-admin > .filtros > div > select {
     background-color: #00584A;
     color: #ffffff;
     border: none;
@@ -66,8 +54,7 @@
 
 }
 
-
-table.tableDataReservas {
+table.tableDataPagos {
     width: 100%;
     border-collapse: collapse;
     background-color: #FFFFFF;
@@ -76,43 +63,44 @@ table.tableDataReservas {
     overflow: hidden;
 }
 
-table.tableDataReservas thead {
+table.tableDataPagos thead {
     background-color: #00584A;
     color: #FFFFFF;
 }
 
-table.tableDataReservas th,
-table.tableDataReservas td {
+table.tableDataPagos th,
+table.tableDataPagos td {
     padding: 15px;
     text-align: left;
     border-bottom: 1px solid #55887B;
 }
 
-table.tableDataReservas td {
+table.tableDataPagos td {
     font-size: clamp(1.2rem, 1.1vw, 1.5rem);
     /* cursor: pointer; */
 }
 
-table.tableDataReservas td>ul {
+table.tableDataPagos td>ul {
     list-style-type: none;
 }
 
-table.tableDataReservas th {
+table.tableDataPagos th {
     font-size: clamp(1.5rem, 1.3vw, 1.8rem);
 
 }
 
-table.tableDataReservas tbody tr:nth-child(even) {
+table.tableDataPagos tbody tr:nth-child(even) {
     background-color: #f5c6b56c;
     /* Color alternativo para filas */
 }
+
 
 
 button:hover {
     background-color: #55887B;
 }
 
-table.tableDataReservas td[colspan="3"] {
+table.tableDataPagos td[colspan="3"] {
     text-align: center;
     font-style: italic;
     color: #00584A;

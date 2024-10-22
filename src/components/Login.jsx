@@ -31,7 +31,10 @@ export function Login() {
                     navigate("/gestion_reservas");  // Ruta para administradores
                 } else if (usuarioData.rango === "Cliente") {
                     navigate("/reservas");  // Ruta para clientes
+                } else if(usuarioData.rango === "Secretaria" || usuarioData.rango === "Profesional"){
+                    navigate("/gestion_reservas");  // Ruta para clientes
                 }
+
             } else {
                 console.error("El documento del usuario no existe");
             }

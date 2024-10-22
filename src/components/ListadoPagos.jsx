@@ -1,12 +1,11 @@
-
 import { db } from '../../credentials.js'; 
 import React, { useState, useEffect } from 'react';
-import { collection, getDocs, query, where } from 'firebase/firestore';
-import { Header } from './Header.jsx';
-import { Footer } from './Footer.jsx';
+import { collection, getDocs, query, where, updateDoc, doc } from 'firebase/firestore';
+import Sidebar  from './Sidebar/SideBar.jsx';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import useUsuario from '../hooks/useUsuario';
+import Swal from 'sweetalert2'
 
 import jsPDF from 'jspdf';
 import 'jspdf-autotable'; // Importar el plugin de tablas para jsPDF
@@ -57,6 +56,40 @@ export function ListadoPagos() {
         });
     };
 
+    const abonarTurno = (idPago) => {
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "No podrás revertir esta acción",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, abonar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Aquí va la lógica para actualizar el estado del pago en Firebase a "Pagado"
+                actualizarEstadoPago(idPago); // Función para actualizar el pago
+                Swal.fire(
+                    '¡Abonado!',
+                    'El pago ha sido actualizado.',
+                    'success'
+                );
+            }
+        });
+    };
+
+    // Función para actualizar el estado del pago en Firebase
+    const actualizarEstadoPago = async (idPago) => {
+        try {
+            const pagoRef = doc(db, 'pagos', idPago);
+            await updateDoc(pagoRef, { estado: 'Pagado' });
+            // Recargar los pagos después de la actualización
+            fetchPagos();
+        } catch (error) {
+            console.error('Error al actualizar el pago:', error);
+            Swal.fire('Error', 'Hubo un error al actualizar el estado del pago.', 'error');
+        }
+    };
 
     const exportarPDF = () => {
         const doc = new jsPDF();
@@ -87,8 +120,8 @@ export function ListadoPagos() {
     };
 
     return (
-        <div className='containerForUserLoged'>
-            <Header />
+        <div className='containerLoged'>
+            <Sidebar />
             <div className="pagos-admin">
                 <h1>Listado de pagos</h1>
 
@@ -117,18 +150,19 @@ export function ListadoPagos() {
                     </div>
 
                     
-                {/* Botón para exportar PDF */}
-                <button onClick={exportarPDF}>Exportar Datos</button>
+                    {/* Botón para exportar PDF */}
+                    <button id="buttonExportData" onClick={exportarPDF}>Exportar Datos</button>
                 </div>
 
                 {/* Tabla de pagos */}
-                <table>
+                <table className='tableDataPagos'>
                     <thead>
                         <tr>
                             <th>Fecha</th>
                             <th>Cliente</th>
                             <th>Metodo de pago</th>
                             <th>Servicios</th>
+                            <th>Estado</th> {/* Nueva columna de Estado */}
                             <th>Costo total</th>
                         </tr>
                     </thead>
@@ -146,6 +180,18 @@ export function ListadoPagos() {
                                                 <li key={servicio.nombre}>{servicio.nombre} ({servicio.profesional.nombre}) ${servicio.precio} </li>
                                             ))}
                                         </ul>
+                                    </td>
+                                    <td>
+                                    {pago.estado === 'Pendiente' ? (
+                                        <>
+                                            <p>Pendiente</p>
+                                            <button onClick={() => abonarTurno(pago.id)}>
+                                                Abonar turno
+                                            </button>
+                                        </>
+                                    ) : (
+                                        <p>Pagado</p>
+                                    )}
                                     </td>
                                     <td>${pago.monto}</td>
                                 </tr>

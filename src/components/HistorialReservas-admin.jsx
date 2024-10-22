@@ -38,8 +38,8 @@ export function ReservasAdmin() {
                     );
     
                     // Calcular el costo total basado en los servicios filtrados
-                    const costoTotal = serviciosFiltrados.reduce((total, servicio) => total + servicio.precio, 0);
-    
+                    const costoTotal = serviciosFiltrados.reduce((total, servicio) => total + parseInt(servicio.precio), 0);
+
                     return {
                         ...reserva,
                         services: serviciosFiltrados,
@@ -50,7 +50,7 @@ export function ReservasAdmin() {
             } else {
                 // Para usuarios no profesionales, puedes mantener el cálculo normal
                 const reservasConCostos = reservasList.map(reserva => {
-                    const costoTotal = reserva.services.reduce((total, servicio) => total + servicio.precio, 0);
+                    const costoTotal = reserva.services.reduce((total, servicio) => total + parseInt(servicio.precio), 0);
                     return {
                         ...reserva,
                         costoTotal

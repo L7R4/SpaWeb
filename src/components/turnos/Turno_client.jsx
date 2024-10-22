@@ -56,6 +56,7 @@ export function Turnos() {
     // const auth = getAuth(appFirebase);
     const usuario = useUsuario();
     // const usuario = 
+    // console.log(usuario)
     const [step, setStep] = useState(1);
 
     const [servicios, setServicios] = useState([]); // Manejar los servicios
@@ -128,7 +129,7 @@ export function Turnos() {
         validateFormFields();
     },[services])
 
-
+    
     const totalCost = services.reduce((acc, service) => acc + parseInt(service.precio), 0);
 
     const deleteService = (serviceKey) => {
@@ -177,25 +178,10 @@ export function Turnos() {
 
     
     const sendEmail = async (dataContext) => {
-        // Crear un formulario HTML dinámico
-        const form = document.createElement('form');
         
-        // Recorrer el diccionario y crear los campos de entrada
-        for (let key in dataContext) {
-            if (dataContext.hasOwnProperty(key)) {
-                const input = document.createElement('input');
-                input.setAttribute('type', 'hidden'); // Usamos hidden ya que no necesitas mostrar el formulario
-                input.setAttribute('name', key);
-                input.setAttribute('value', dataContext[key]);
-                form.appendChild(input);
-            }
-        }
-    
-        // Añadir el formulario al documento (sin mostrarlo en pantalla)
-        document.body.appendChild(form);
     
         // Pasar el formulario a EmailJS
-        emailjs.sendForm('service_fwb38j8', 'template_eb2hjms', form, 'A37cZEec6qHT_dono')
+        emailjs.send('service_fwb38j8', 'template_eb2hjms', dataContext, 'A37cZEec6qHT_dono')
             .then(
                 () => {
                     console.log('SUCCESS!');
@@ -204,9 +190,6 @@ export function Turnos() {
                     console.log('FAILED...', error);
                 }
             );
-    
-        // Eliminar el formulario del documento después de enviarlo
-        document.body.removeChild(form);
     };
 
     
@@ -252,6 +235,8 @@ export function Turnos() {
                         nombre: service.profesional.nombre,
                     },
                 })),
+                estado: metodoPago !== "efectivo" ? "Pagado" : "Pendiente" ,
+
                 fechaPago: new Date().toLocaleDateString(), // Fecha de la reserva (puedes ajustar esto)
                 metodoPago: metodoPago, // Asumimos que guardas el método de pago en algún estado
             };
@@ -277,14 +262,29 @@ export function Turnos() {
                         nombre: service.profesional.nombre,
                     },
                 })),
+                estado: metodoPago !== "efectivo" ? "Pagado" : "Pendiente" ,
                 info: metodoPago == "transferencia" ?  comprobanteTransferencia : tarjetaData
             };
+
+           
+            const serviciosSolicitados = services.map(servicio => ({
+                nombre: servicio.nombre,
+                precio: servicio.precio,
+                profesional: servicio.profesional.nombre
+            }));
+            
+
+            
             const dataContextForEmail = {
-                to_email_user: "leesingripex006@gmail.com",
-                to_name: "Lautaro",
-                message: "Email por pago de cuota",
-                from_name:"Lautaro from"
-            }
+                to_email_user: usuario.emailUser,
+                to_name: usuario.displayName,
+                serviciosSolicitados: serviciosSolicitados,
+                precioTotal: totalCost,
+                fecha:new Date().toLocaleString()
+            };
+            console.log('Datos para el correo:', dataContextForEmail);
+
+
             await addDoc(solicitudesRef, reservaData);
             await addDoc(pagosRef, pagoData);
             await sendEmail(dataContextForEmail);
@@ -505,7 +505,7 @@ function Servicio({ nombre, precio, profesional, isSelected, addServiceEvent }) 
     )
 }
 
-function ServicioSelected({ nombre, precio, deleteServiceEvent }) {
+function ServicioSelected({ profesional, nombre, precio, deleteServiceEvent }) {
     return (
         <li className="serviceItemSelected">
             <div className="infoItemSelected">
