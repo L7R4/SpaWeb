@@ -1,6 +1,3 @@
-* {
-    font-family: 'Poppins', sans-serif;
-}
 
 .empleo {
     background-color: #EDDED2;
@@ -95,7 +92,7 @@ textarea {
     justify-content: center;
 }
 
-input[type="file"] {
+.upload-cv > input[type="file"] {
     display: none;
 }
 

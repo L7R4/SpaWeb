@@ -11,29 +11,35 @@ dayjs.locale('es'); // Establece el idioma a español
 
 
 
-export function DateCalendarMultipleSelect({ onDateChange, clearValue }) {
+export function DateCalendarMultipleSelect({ onDateChange, clearValue, checkStatusButtonSubmit }) {
   const today = dayjs().toDate();
 
   const [value, setValue] = useState("");
   useEffect(() => {
     if (clearValue) {
-      setValue(); // Limpia la selección
+      setValue(""); // Limpia la selección
     }
   }, [clearValue]);
 
+  useEffect(()=>{
+    const today = {day:dayjs().format('DD'), month: dayjs().format('MM'), year: dayjs().format('YYYY')};
+    const formattedDate = `${today.day}/${today.month}/${today.year}`;
+    onDateChange(formattedDate);  //Llama a la función cuando cambia la fecha
+    setValue(today)
+  },[])
 
   const handleDateChange = (newValue) => {
     setValue(newValue);
     const formattedDate = `${newValue.day}/${newValue.month}/${newValue.year}`;
     onDateChange(formattedDate);  //Llama a la función cuando cambia la fecha
+    checkStatusButtonSubmit();
   };
 
 
   return (
     <>
-      {value && (
-        <input type="hidden" id="calendarioInputID" name="calendar-days" value={`${value.day}/${value.month}/${value.year}`} />
-      )}
+      <input className="inputCheck" type="hidden" id="calendarioInputID" name="calendar-days" value={`${value.day}/${value.month}/${value.year}`} />
+    
       <Calendar
         value={value}
         onChange={handleDateChange}

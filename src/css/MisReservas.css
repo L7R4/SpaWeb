@@ -1,25 +1,21 @@
-/* MisReservas.css */
-body {
-    overflow: auto;
-    margin: 0;
-    padding: 0; /* Asegura que el body no tenga padding que podría causar problemas de diseño */
-}
 
-#misReservas {
-    background-color: #EDDED2; /* Fondo */
-    max-width: 800px;
-    margin: 0 auto;
-    border-radius: 8px;
-    padding: 20px; /* Añadir padding para mayor espacio interno */
-    margin-bottom: 20px; /* Añadir margen inferior para crear espacio con el footer */
+.misReservasWrapper {
+    width: 100%;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
 }
+.misReservasWrapper > div{
+    width: 100%;
 
-h2 {
+}
+.misReservasWrapper > h2 {
     text-align: center;
     color: #00584A;
-    font-size: clamp(1.5rem, 2vw, 2rem);
+    font-size: clamp(3rem, 2vw, 4rem);
     margin-bottom: 20px;
-}
+} 
 
 .table-container {
     width: 100%;
@@ -27,7 +23,7 @@ h2 {
     margin-bottom: 40px; /* Añadir margen inferior adicional para asegurar espacio con el footer */
 }
 
-table {
+table.tableDataMisReservas{
     width: 100%;
     border-collapse: collapse;
     background-color: #FFFFFF;
@@ -35,31 +31,31 @@ table {
     overflow: hidden;
 }
 
-thead {
+table.tableDataMisReservas thead {
     background-color: #00584A;
     color: #EDDED2;
 }
 
-th, td {
+table.tableDataMisReservas th, table.tableDataMisReservas td {
     padding: 12px;
     text-align: left;
     border-bottom: 1px solid #ddd;
 }
 
-th {
-    font-size: clamp(12px, 1.2vw, 16px);
+table.tableDataMisReservas th {
+    font-size: clamp(1.3rem, 1.3vw, 2rem);
 }
 
-td {
-    font-size: clamp(10px, 1vw, 14px);
+table.tableDataMisReservas td {
+    font-size: clamp(1.3rem, 1.2vw, 1.8rem);
 }
 
-tr:nth-child(even) {
+table.tableDataMisReservas tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
-tfoot {
+table.tableDataMisReservas tfoot {
     background-color: #00584A;
     color: #EDDED2;
-    font-size: clamp(10px, 1vw, 14px); /* Tamaño de fuente consistente */
+    font-size: clamp(1.3rem, 1.2vw, 1.8rem); /* Tamaño de fuente consistente */
 }

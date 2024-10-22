@@ -8,8 +8,13 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 import { Header } from './Header.jsx';
 import { Footer } from './Footer.jsx';
+import useUsuario from '../hooks/useUsuario.js';
+import  Sidebar  from './Sidebar/SideBar.jsx';
+
 
 export function Empleo() {
+    const usuario = useUsuario();
+
     const { register, handleSubmit, setValue } = useForm();
     const [mensaje, setMensaje] = useState('');
     const [mensajeError, setMensajeError] = useState('');
@@ -69,39 +74,43 @@ export function Empleo() {
     };
 
     return (
-        <>
-            <Header />
-            <section className="empleo">
-                <h2>¡Trabajá con nosotros!</h2>
-                <div className="empleo-contenedor">
-                    <form id="empleo-form" onSubmit={handleSubmit(enviar)}>
-                        <label htmlFor="name">Nombre</label>
-                        <input className="empleo-inputs" type="text" id="name" name="name" required {...register("name")} />
+        <div className={usuario ? 'containerLoged' : ''}>
+            {/* Mostrar Sidebar si está logueado, si no, el Header */}
+            {usuario ? <Sidebar /> : <Header />}
 
-                        <label htmlFor="email">Email</label>
-                        <input type="email" id="email" name="email" required className="empleo-inputs" {...register("email")} />
+            {/* Aplicar clase condicionalmente */}
+                <section className="empleo wrapperContent">
+                    <h2>¡Trabajá con nosotros!</h2>
+                    <div className="empleo-contenedor">
+                        <form id="empleo-form" onSubmit={handleSubmit(enviar)}>
+                            <label htmlFor="name">Nombre</label>
+                            <input className="empleo-inputs" type="text" id="name" name="name" required {...register("name")} />
 
-                        <label htmlFor="mensaje">Mensaje</label>
-                        <textarea className="empleo-inputs" id="mensaje" name="mensaje" rows="4" cols="50" placeholder="Escribe tu mensaje aquí..." {...register("message")}></textarea>
+                            <label htmlFor="email">Email</label>
+                            <input type="email" id="email" name="email" required className="empleo-inputs" {...register("email")} />
 
-                        <div className="upload-cv">
-                            <img src={uploadIcon} alt="Upload Icon" />
-                            <label htmlFor="cv-pic" className="file-upload-cv">Adjunta tu CV (.pdf)</label>
-                            <input type="file" id="cv-pic" name="cv-pic" accept="application/pdf" required {...register("cv")} />
+                            <label htmlFor="mensaje">Mensaje</label>
+                            <textarea className="empleo-inputs" id="mensaje" name="mensaje" rows="4" cols="50" placeholder="Escribe tu mensaje aquí..." {...register("message")}></textarea>
+
+                            <div className="upload-cv">
+                                <img src={uploadIcon} alt="Upload Icon" />
+                                <label htmlFor="cv-pic" className="file-upload-cv">Adjunta tu CV (.pdf)</label>
+                                <input type="file" id="cv-pic" name="cv-pic" accept="application/pdf" required {...register("cv")} />
+                            </div>
+                        </form>
+
+                        <img src={logoVersion3} alt="Company Logo" />
+
+                        <div className="enviar-boton-container">
+                            <input type="submit" value="Enviar" className="boton-enviar" form="empleo-form" />
                         </div>
-                    </form>
-
-                    <img src={logoVersion3} alt="Company Logo" />
-
-                    <div className="enviar-boton-container">
-                        <input type="submit" value="Enviar" className="boton-enviar" form="empleo-form" />
+                        {mensaje && <div className="mensaje-exito">{mensaje}</div>}
+                        {mensajeError && <div className="mensaje-error">{mensajeError}</div>}
                     </div>
-                    {mensaje && <div className="mensaje-exito">{mensaje}</div>}
-                    {mensajeError && <div className="mensaje-error">{mensajeError}</div>}
-                </div>
-            </section>
-            <Footer />
-        </>
+                </section>
 
+            {/* Mostrar Footer solo si no está logueado */}
+            {!usuario && <Footer />}
+        </div>
     );
 }

@@ -27,7 +27,7 @@ export function ListadoClientes() {
     }, []);
 
     return (
-        <>
+        <div className='containerForUserLoged'>
             <Header />
             <div className="usuario-admin">
                 <h1>Listado de clientes</h1>
@@ -48,7 +48,6 @@ export function ListadoClientes() {
                     </tbody>
                 </table>
             </div>
-            <Footer />
-        </>
+        </div>
     );
 }

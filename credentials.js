@@ -28,10 +28,10 @@ export const db = getFirestore(appFirebase);
 export const storage = getStorage(appFirebase);
 
 
-async function getRango(uid){
+async function getUser(uid){
   const docRef = doc(db, `usuarios/${uid}`);
   const docCifrada = await getDoc(docRef);
-  const finalInfo = docCifrada.data().rango;
+  const finalInfo = docCifrada.data();
   return finalInfo;
 }
 
@@ -40,16 +40,17 @@ export const onChangeUser = (setUsuario) =>{
   const auth = getAuth()
   onAuthStateChanged(auth, (user) => {
     if(user){
-        getRango(user.uid).then((rango)=>{
+      getUser(user.uid).then((data)=>{
           const userData = {
             idUser : user.uid,
             emailUser: user.email,
-            rangoUser: rango
+            rangoUser: data.rango,
+            displayName: data.nombreCompleto
           }
           setUsuario(userData);   
         })
     }else{
-      setUsuario(null);    }
+      setUsuario(null);}
   })
 }
 

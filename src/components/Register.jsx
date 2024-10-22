@@ -12,6 +12,7 @@ import { Footer } from './Footer.jsx';
 import userIcon from '../assets/icons/iconoUser.svg';
 import uploadIcon from '../assets/icons/icono-upload.svg';
 
+
 export function Register() {
     const { register, handleSubmit, setError, clearErrors } = useForm();
     const auth = getAuth(appFirebase);
@@ -50,7 +51,7 @@ export function Register() {
 
     return (
         <>
-        <Sidebar />
+        <Header />
         <section className="register">
             <div className="register-contenedor">
                 <img src={userIcon} className="user-image" alt="User Icon" />

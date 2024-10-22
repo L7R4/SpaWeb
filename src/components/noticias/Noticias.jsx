@@ -55,9 +55,11 @@ const Noticias = () => {
   console.log(usuario)
 
   return (
-    <>
-      <Sidebar />
-      <div className='contenedorPadre-noticias'>
+    <div className={usuario ? 'containerLoged' : ''}>
+      {/* Mostrar Sidebar si está logueado, si no, el Header */}
+      {usuario ? <Sidebar /> : <Header />}
+    
+      <div className='contenedorPadre-noticias wrapperContent'>
         {usuario && usuario.rangoUser == 'Administrador' && (
           <button className='botonNuevo' onClick={agregarNoticia}>Agregar Noticia</button>
         )}
@@ -85,9 +87,11 @@ const Noticias = () => {
           </Modal>
         )}
       </div>
-      <Footer />
+      
+      {/* Mostrar Footer solo si no está logueado */}
+      {!usuario && <Footer />}
 
-    </>
+    </div>
   );
 };
 

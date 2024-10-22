@@ -1,84 +1,14 @@
-// import { db, storage } from '../../credentials.js'; // Asegúrate de que estos importes son correctos
-// import React, { useState, useEffect } from 'react';
-// import { collection, getDocs } from 'firebase/firestore';
-// // import { ref, getDownloadURL } from 'firebase/storage';
-// import { Header } from './Header.jsx';
-// import { Footer } from './Footer.jsx';
-
-// export function ReservasAdmin() {
-//     const [reservas, setReservas] = useState([]);
-
-//     // Función para obtener las reservas de empleo desde Firebase
-//     const fetchReservas = async () => {
-//         try {
-//             const querySnapshot = await getDocs(collection(db, 'reservasServicios'));
-//             const reservasList = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-//             setReservas(reservasList);
-//         } catch (error) {
-//             console.error('Error fetching reservas: ', error);
-//         }
-//     };
-
-//     // Obtener los datos cuando el componente se monta
-//     useEffect(() => {
-//         fetchReservas();
-//     }, []);
-
-
-//     return (
-//         <>
-//             <Header />
-//             <div className="empleo-admin">
-//                 <h1>Reservas</h1>
-//                 <table>
-//                     <thead>
-//                         <tr>
-//                             <th>Fecha</th>
-//                             <th>Horario</th>
-//                             <th>Servicios</th>
-
-//                             <th>Costo total</th>
-//                         </tr>
-//                     </thead>
-//                     <tbody>
-//                         {reservas.length > 0 ? (
-//                             reservas.map((reserva) => (
-//                                 <tr key={reserva.fecha + " " + reserva.horario}>
-//                                     <td>{reserva.fecha}</td>
-//                                     <td>{reserva.horario}</td>
-//                                     <td>
-//                                         <ul>
-//                                             {reserva.services.map((servicio) => (
-//                                                 <li key={servicio.nombre}>{servicio.nombre} - ${servicio.precio} por {servicio.profesional} </li>
-//                                             ))}
-//                                         </ul>
-//                                     </td>
-
-//                                     <td>${reserva.costoTotal}</td>
-
-//                                 </tr>
-//                             ))
-//                         ) : (
-//                             <tr>
-//                                 <td colSpan="3">No hay reservas de empleo disponibles.</td>
-//                             </tr>
-//                         )}
-//                     </tbody>
-//                 </table>
-//             </div>
-//             <Footer />
-//         </>
-
-//     );
-// }
 
 import { db } from '../../credentials.js'; 
 import React, { useState, useEffect } from 'react';
 import { collection, getDocs, query, where } from 'firebase/firestore';
-import { Header } from './Header.jsx';
-import { Footer } from './Footer.jsx';
+import Sidebar  from './Sidebar/SideBar.jsx';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import useUsuario from '../hooks/useUsuario';
+
+import jsPDF from 'jspdf';
+import 'jspdf-autotable'; // Importar el plugin de tablas para jsPDF
 
 export function ReservasAdmin() {
     const [reservas, setReservas] = useState([]);
@@ -87,13 +17,47 @@ export function ReservasAdmin() {
     const [profesionalFiltro, setProfesionalFiltro] = useState(''); // Filtro por profesional
     const [servicios, setServicios] = useState([]); // Lista de servicios disponibles
     const [profesionales, setProfesionales] = useState([]); // Lista de profesionales disponibles
-
+    let usuario = useUsuario()
+    
     // Función para obtener las reservas de Firebase
     const fetchReservas = async () => {
         try {
             const querySnapshot = await getDocs(collection(db, 'reservasServicios'));
             const reservasList = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            setReservas(reservasList);
+            
+            // Si el usuario tiene el rol de "Profesional", filtrar sus reservas
+
+            if (usuario && usuario.rangoUser === 'Profesional') {
+                const reservasFiltradas = reservasList.filter(reserva => 
+                    reserva.services.some(servicio => 
+                        servicio.profesional.nombre === usuario.displayName
+                    )
+                ).map(reserva => {
+                    const serviciosFiltrados = reserva.services.filter(servicio => 
+                        servicio.profesional.nombre === usuario.displayName
+                    );
+    
+                    // Calcular el costo total basado en los servicios filtrados
+                    const costoTotal = serviciosFiltrados.reduce((total, servicio) => total + servicio.precio, 0);
+    
+                    return {
+                        ...reserva,
+                        services: serviciosFiltrados,
+                        costoTotal // Agregar el costo total calculado a la reserva
+                    };
+                });
+                setReservas(reservasFiltradas);
+            } else {
+                // Para usuarios no profesionales, puedes mantener el cálculo normal
+                const reservasConCostos = reservasList.map(reserva => {
+                    const costoTotal = reserva.services.reduce((total, servicio) => total + servicio.precio, 0);
+                    return {
+                        ...reserva,
+                        costoTotal
+                    };
+                });
+                setReservas(reservasConCostos);
+            }
         } catch (error) {
             console.error('Error fetching reservas: ', error);
         }
@@ -104,7 +68,15 @@ export function ReservasAdmin() {
         try {
             const querySnapshot = await getDocs(collection(db, 'servicios'));
             const serviciosList = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            setServicios(serviciosList); // Guardamos la lista de servicios
+            // Si el usuario es profesional, mostrar solo los servicios que ofrece
+            if (usuario && usuario.rangoUser === 'Profesional') {
+                const serviciosFiltrados = serviciosList.filter(servicio => 
+                    servicio.profesional.nombre === usuario.displayName
+                );
+                setServicios(serviciosFiltrados);
+            } else {
+                setServicios(serviciosList); // Si no es profesional, mostrar todos los servicios
+            }
         } catch (error) {
             console.error('Error fetching servicios: ', error);
         }
@@ -132,10 +104,12 @@ export function ReservasAdmin() {
 
     // Obtener los datos cuando el componente se monta
     useEffect(() => {
-        fetchReservas();
+        if(usuario){
+            fetchReservas();
+        }
         fetchServicios();
         fetchProfesionales();
-    }, []);
+    }, [usuario]);
 
    
 
@@ -144,14 +118,42 @@ export function ReservasAdmin() {
         return reservas.filter(reserva => {
             const fechaValida = fechaFiltro ? reserva.fecha === formatearFecha(fechaFiltro) : true; // Comparar formato "dd/MM/yyyy"
             const servicioValido = servicioFiltro ? reserva.services.some(servicio => servicio.nombre === servicioFiltro) : true;
-            const profesionalValido = profesionalFiltro ? reserva.services.some(servicio => servicio.profesional === profesionalFiltro) : true;
+            const profesionalValido = profesionalFiltro ? reserva.services.some(servicio => servicio.profesional.nombre === profesionalFiltro) : true;
             return fechaValida && servicioValido && profesionalValido;
         });
     };
 
+
+    const exportarPDF = () => {
+        const doc = new jsPDF();
+
+        doc.text('Listado de Reservas', 14, 10);
+        const reservasFiltradas = filtrarReservas();
+
+        if (reservasFiltradas.length > 0) {
+            // Crear la tabla con las reservas filtradas
+            const tablaDatos = reservasFiltradas.map(reserva => [
+                reserva.fecha, 
+                reserva.horario, 
+                reserva.services.map(servicio => `${servicio.nombre} (${servicio.profesional.nombre})`).join(', '), 
+                `$${reserva.costoTotal}`
+            ]);
+
+            // Crear la tabla en el PDF usando autoTable
+            doc.autoTable({
+                head: [['Fecha', 'Horario', 'Servicios', 'Costo Total']],
+                body: tablaDatos,
+            });
+
+            doc.save('reservas.pdf');
+        } else {
+            alert('No hay reservas para exportar.');
+        }
+    };
+
     return (
-        <>
-            <Header />
+        <div className='containerLoged'>
+            <Sidebar />
             <div className="reservas-admin">
                 <h1>Reservas</h1>
 
@@ -180,19 +182,24 @@ export function ReservasAdmin() {
                     </div>
 
                     {/* Filtro por profesional */}
-                    <div>
-                        <label>Filtrar por Profesional:</label>
-                        <select value={profesionalFiltro} onChange={(e) => setProfesionalFiltro(e.target.value)}>
-                            <option value="">Todos los profesionales</option>
-                            {profesionales.map(profesional => (
-                                <option key={profesional.id} value={profesional.nombre}>{profesional.nombre}</option>
-                            ))}
-                        </select>
-                    </div>
+                    {usuario && usuario.rangoUser === "Administrador" && (
+                       <div>
+                            <label>Filtrar por Profesional:</label>
+                            <select value={profesionalFiltro} onChange={(e) => setProfesionalFiltro(e.target.value)}>
+                                <option value="">Todos los profesionales</option>
+                                {profesionales.map(profesional => (
+                                    <option key={profesional.id} value={profesional.nombreCompleto}>{profesional.nombreCompleto}</option>
+                                ))}
+                            </select>
+                        </div>
+                    )}
+                    
+                {/* Botón para exportar PDF */}
+                <button id="buttonExportData" onClick={exportarPDF}>Exportar Datos</button>
                 </div>
 
                 {/* Tabla de reservas */}
-                <table>
+                <table className='tableDataReservas'>
                     <thead>
                         <tr>
                             <th>Fecha</th>
@@ -210,7 +217,7 @@ export function ReservasAdmin() {
                                     <td>
                                         <ul>
                                             {reserva.services.map((servicio) => (
-                                                <li key={servicio.nombre}>{servicio.nombre} - ${servicio.precio} por {servicio.profesional} </li>
+                                                <li key={servicio.nombre}>{servicio.nombre} - ${servicio.precio} por {servicio.profesional.nombre} </li>
                                             ))}
                                         </ul>
                                     </td>
@@ -225,7 +232,6 @@ export function ReservasAdmin() {
                     </tbody>
                 </table>
             </div>
-            <Footer />
-        </>
+        </div>
     );
 }

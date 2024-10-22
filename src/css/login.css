@@ -1,17 +1,4 @@
-@font-face {
-    font-family: 'Golfmind';
-    src: url('/src/assets/fonts/Golfmind.ttf') format('truetype');
-}
-html{
-    font-size: 62.5%;
-}
-* {
-    margin: 0;
-    padding: 0;
-    font-feature-settings: "pnum" on, "lnum" on;
-    box-sizing: border-box;
- 
- }
+
 .login{
     background-color: #00584A;
     min-height: 100vh;

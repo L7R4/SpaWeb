@@ -6,11 +6,17 @@ import  Sidebar  from '../Sidebar/SideBar.jsx';
 
 import { DateCalendarMultipleSelect } from "./Calendar.jsx";
 import { HorarioSelect } from "./HorarioSelect.jsx";
+// import { PaymentComponent } from './PaymentComponent';
+import { MetodoPago } from "./MetodoPago.jsx";
 
 // Firebase imports
 import { collection, addDoc, getDocs, where, query, doc, getDoc } from 'firebase/firestore';
-import appFirebase, { db } from '../../../credentials.js';
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import appFirebase, { storage   ,db } from '../../../credentials.js';
 import { getAuth } from "firebase/auth";
+import useUsuario from '../../hooks/useUsuario.js';
+import emailjs from '@emailjs/browser';
+
 
 // Imports de terceros
 import Swal from 'sweetalert2'
@@ -47,25 +53,42 @@ const fetchServicios = async () => {
 
 export function Turnos() {
     // Verificar si hay un usuario logueado
-    const auth = getAuth(appFirebase);
-    const user = auth.currentUser;
-    // console.log(user);
+    // const auth = getAuth(appFirebase);
+    const usuario = useUsuario();
+    // const usuario = 
+    const [step, setStep] = useState(1);
 
     const [servicios, setServicios] = useState([]); // Manejar los servicios
     const [services, setServices] = useState([]); // Manejar los servicios seleccionados
 
+    // #region Estados de Fecha y Hora
     const [horariosDisponibles, setHorariosDisponibles] = useState(horariosOptions);
     const [horarioSeleccionado, setHorarioSeleccionado] = useState(null); // Manejar el horario seleccionado
     const [fechaSeleccionada, setFechaSeleccionada] = useState(null); // Manejar la fecha seleccionada
     const [clearHorario, setClearHorario] = useState(false);
     const [clearDate, setClearDate] = useState(false);
+    // #endregion
 
+    // #region Estados Metodos de pagos
+    const [metodoPago, setMetodoPago] = useState(''); // Nuevo estado para método de pago
+    const [transferenciaData, setTransferenciaData] = useState({});
+    const [tarjetaData, setTarjetaData] = useState({
+        numero: "",
+        titular: "",
+        vencimiento: "",
+        cvv: "",
+        direccion: "",
+        ciudad: "",
+        pais: ""
+    });
+
+    // #endregion
+    
     useEffect(() => {
         const getServicios = async () => {
             const serviciosData = await fetchServicios();
             setServicios(serviciosData);
         };
-
         getServicios();
     }, []);
 
@@ -86,18 +109,25 @@ export function Turnos() {
     };
 
     const addService = (service) => {
-        console.log(service)
         const serviceExists = services.some((s) => s.nombre === service.nombre);
+
         if (serviceExists) {
             const updatedServices = services.filter((s) => s.nombre !== service.nombre);
 
             setServices(updatedServices);
         } else {
-
-            setServices([...services, { ...service, isSelected: true }]);
+            const profesional = {
+                nombre: service.profesional.nombre,
+                email: service.profesional.email
+            };
+            setServices([...services, { ...service, profesional,isSelected: true }]);
         }
-        console.log(services)
     }
+
+    useEffect(()=>{
+        validateFormFields();
+    },[services])
+
 
     const totalCost = services.reduce((acc, service) => acc + parseInt(service.precio), 0);
 
@@ -118,22 +148,76 @@ export function Turnos() {
         });
     }
 
+    const cleanInputsRadioMetodoPago = () =>{
+        const form = document.getElementById("formRequestServicios");
+        const inputs = form.querySelectorAll("input.inputCheck[type=radio]");
+        inputs.forEach(element => {
+            element.checked = false
+        });
+    }
+
+    const handleFileUpload = async (file) => {
+        try {
+          // Referencia a donde se subirá el archivo en Firebase Storage
+          const storageRef = ref(storage, `comprobantesTransferencia/${file.name}`);
+      
+          // Subir archivo a Firebase Storage
+          const snapshot = await uploadBytes(storageRef, file);
+          console.log('Archivo subido exitosamente:', snapshot);
+      
+          // Obtener el enlace de descarga
+          const downloadURL = await getDownloadURL(snapshot.ref);
+          console.log('Enlace de descarga:', downloadURL);
+      
+          return downloadURL;
+        } catch (error) {
+          console.error("Error al subir el archivo y guardar el enlace: ", error);
+        }
+    };
+
+    
+    const sendEmail = async (dataContext) => {
+        // Crear un formulario HTML dinámico
+        const form = document.createElement('form');
+        
+        // Recorrer el diccionario y crear los campos de entrada
+        for (let key in dataContext) {
+            if (dataContext.hasOwnProperty(key)) {
+                const input = document.createElement('input');
+                input.setAttribute('type', 'hidden'); // Usamos hidden ya que no necesitas mostrar el formulario
+                input.setAttribute('name', key);
+                input.setAttribute('value', dataContext[key]);
+                form.appendChild(input);
+            }
+        }
+    
+        // Añadir el formulario al documento (sin mostrarlo en pantalla)
+        document.body.appendChild(form);
+    
+        // Pasar el formulario a EmailJS
+        emailjs.sendForm('service_fwb38j8', 'template_eb2hjms', form, 'A37cZEec6qHT_dono')
+            .then(
+                () => {
+                    console.log('SUCCESS!');
+                },
+                (error) => {
+                    console.log('FAILED...', error);
+                }
+            );
+    
+        // Eliminar el formulario del documento después de enviarlo
+        document.body.removeChild(form);
+    };
+
+    
+
     const enviar = async (event) => {
         event.preventDefault();
-        if (!user) {
+        console.log(usuario)
+        if (!usuario || !usuario.idUser) {
             Swal.fire({
                 title: 'Error',
                 text: 'Primero debes registrarte o iniciar sesión',
-                icon: 'error',
-                confirmButtonText: 'Cerrar',
-            });
-            return;
-        }
-
-        if (!horarioSeleccionado || !fechaSeleccionada || services.length === 0) {
-            Swal.fire({
-                title: 'Error',
-                text: 'Por favor selecciona todos los campos',
                 icon: 'error',
                 confirmButtonText: 'Cerrar',
             });
@@ -145,28 +229,66 @@ export function Turnos() {
 
         try {
             showLoading();
-            // Buscar el usuario en la colección "usuarios" por su UID  
-            const userDocRef = doc(db, "usuarios", user.uid);
-            const userDocSnap = await getDoc(userDocRef);
 
-            // Obtener el campo "nombreCompleto" del documento del usuario  
-            const usuarioFound = userDocSnap.data();
             const solicitudesRef = collection(db, "reservasServicios");
+            const pagosRef = collection(db, "pagos");
 
-            const data = {
-                horario: horarioSeleccionado,
-                fecha: fechaSeleccionada,
-                services: services,
-                costoTotal: totalCost,
+            
+            const reservaData = {
                 cliente: {
-                    uid: user.uid, // ID del usuario  
-                    email: usuarioFound.email, // Email del usuario  
-                    nombreCompleto: usuarioFound.nombreCompleto // Nombre del usuario, si está disponible  
-                }
+                    email: usuario.emailUser,
+                    nombreCompleto: usuario.displayName,
+                    uid: usuario.idUser,
+                },
+                costoTotal: totalCost,
+                fecha: fechaSeleccionada,
+                horario: horarioSeleccionado,
+                services: services.map(service => ({
+                    isSelected: true,
+                    nombre: service.nombre,
+                    precio: service.precio,
+                    profesional: {
+                        email: service.profesional.email,
+                        nombre: service.profesional.nombre,
+                    },
+                })),
+                fechaPago: new Date().toLocaleDateString(), // Fecha de la reserva (puedes ajustar esto)
+                metodoPago: metodoPago, // Asumimos que guardas el método de pago en algún estado
             };
-            console.log(data)
 
-            await addDoc(solicitudesRef, data);
+            let comprobanteTransferencia = ""
+            if(metodoPago == "transferencia"){
+                comprobanteTransferencia = await handleFileUpload(transferenciaData.comprobante) 
+            }
+            const pagoData = {
+                cliente: {
+                    nombre: usuario.displayName,
+                    email: usuario.emailUser,
+                },
+                monto: totalCost,
+                metodoPago: metodoPago, // Método de pago
+                fecha: new Date().toLocaleDateString(), // Fecha del pago
+                servicios: services.map(service => ({
+                    isSelected: true,
+                    nombre: service.nombre,
+                    precio: service.precio,
+                    profesional: {
+                        email: service.profesional.email,
+                        nombre: service.profesional.nombre,
+                    },
+                })),
+                info: metodoPago == "transferencia" ?  comprobanteTransferencia : tarjetaData
+            };
+            const dataContextForEmail = {
+                to_email_user: "leesingripex006@gmail.com",
+                to_name: "Lautaro",
+                message: "Email por pago de cuota",
+                from_name:"Lautaro from"
+            }
+            await addDoc(solicitudesRef, reservaData);
+            await addDoc(pagosRef, pagoData);
+            await sendEmail(dataContextForEmail);
+
             Swal.close();
 
             Swal.fire({
@@ -179,9 +301,14 @@ export function Turnos() {
 
             // Limpiar después de enviar la reserva  
             setHorarioSeleccionado(null);
-            setFechaSeleccionada(null);
+            // setFechaSeleccionada("");
             setServices([]); // Limpiar servicios seleccionados  
             setHorariosDisponibles(horariosOptions); // Reiniciar horarios a los originales  
+            setMetodoPago('');
+            setTransferenciaData({});
+            setTarjetaData({});
+            setStep(1)
+            cleanInputsRadioMetodoPago()
 
         } catch (error) {
             console.error("Error al enviar la reserva: ", error);
@@ -196,90 +323,185 @@ export function Turnos() {
         }
     };
 
-    const isFormComplete = services.length > 0 && horarioSeleccionado && fechaSeleccionada;
 
-    return (
-        <>
-            <Sidebar />
-            <div className="wrapper">
-                <div className="listServiciosContainer">
-                    <h1 className="seccionTittle">Servicios</h1>
-                    <ul>
-                        {servicios.map(sv =>
-                            <Servicio key={sv.nombre} isSelected={services.some(s => s.nombre === sv.nombre)} profesional={sv.profesional} nombre={sv.nombre} precio={sv.precio} addServiceEvent={addService} />
-                        )}
-                    </ul>
-                </div>
+    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+    const validateFormFields = () => {
+        const form = document.getElementById("formRequestServicios");
+        const inputs = form.querySelectorAll("input.inputCheck");
+        let allFieldsComplete = true; // Asumimos que todos los campos están completos inicialmente
 
-                <div className="turnosSideManagementContainer">
-                    <form id="formRequestServicios" onSubmit={enviar}>
-                        <h1 className="seccionTittle">Turnos</h1>
-                        {services.length > 0 && (
-                            <div className="leyendaServiciosSelccionadosWrapper">
-                                <h3>Servicios seleccionados</h3>
-                            </div>
-                        )}
-                        <ul>
-                            {services.map(sv =>
-                                <ServicioSelected key={sv.nombre} profesional={sv.profesional} nombre={sv.nombre} precio={sv.precio} deleteServiceEvent={() => deleteService(sv.nombre)} />
+
+        inputs.forEach(input => {
+            if (input.type === "text" || input.type === "hidden") {
+                // Verificar si el campo de texto u oculto tiene un valor
+                if (input.value === "" || input.value === null ) {
+                    // console.log("weps")
+                    allFieldsComplete = false; // Si falta este campo, marcar como incompleto
+                }
+            } else if (input.type === "radio") {
+                // Verificar si hay al menos un radio seleccionado en el grupo
+                const radioGroup = form.querySelectorAll(`input[name="${input.name}"]`);
+                const oneChecked = Array.from(radioGroup).some(radio => radio.checked);
+                if (!oneChecked) {
+                    allFieldsComplete = false; // Si ningún radio está seleccionado, marcar como incompleto
+                }
+            } else if (input.type === "file") {
+                // Verificar si se ha subido un archivo
+                if (input.files.length === 0) {
+                    allFieldsComplete = false; // Si no hay archivo, marcar como incompleto
+                }
+            }
+        });
+
+        // Verificar si hay servicios seleccionados
+        if(services.length == 0){
+            allFieldsComplete = false; // Si no hay servicios seleccionados, no habilitar boton
+        }
+     
+        setIsButtonDisabled(!allFieldsComplete); // Deshabilitar el botón si no están completos
+    };
+
+//#region  manejo de paneles 
+    const goToNextStep = () => {
+        setStep(2); // Avanza al segundo panel
+    };
+
+    const goToPreviousStep = () => {
+        setStep(1); // Vuelve al primer panel
+    };
+// #endregion
+    
+return (
+    <div className={usuario ? 'containerLoged' : ''}>
+        {/* Mostrar Sidebar si está logueado, si no, el Header */}
+        {usuario ? <Sidebar /> : <Header />}
+        <div className="wrapper wrapperContent">
+            <div className="listServiciosContainer">
+                <h1 className="seccionTittle">Servicios</h1>
+                <ul>
+                    {servicios.map(sv =>
+                        <Servicio key={sv.nombre} 
+                        isSelected={services.some(s => s.nombre === sv.nombre)} 
+                        profesional={{ nombre: sv.profesional.nombre, email: sv.profesional.email }} 
+                        nombre={sv.nombre} 
+                        precio={sv.precio} 
+                        addServiceEvent={addService} />
+                    )}
+                </ul>
+            </div>
+            <div className="turnosSideManagementContainer">
+                <form id="formRequestServicios" onSubmit={enviar}>
+                <div className="booking-container">
+                    <div className={`panel panel-1 ${step === 1 ? 'active' : ''}`}>
+                        <div>
+                            <h1 className="seccionTittle">Turnos</h1>
+                            {services.length > 0 && (
+                                <div className="leyendaServiciosSelccionadosWrapper">
+                                    <h3>Servicios seleccionados</h3>
+                                </div>
                             )}
+                            <ul>
+                                {services.map(sv =>
+                                    <ServicioSelected key={sv.nombre} 
+                                    profesional={{ nombre: sv.profesional.nombre, email: sv.profesional.email }}
+                                    nombre={sv.nombre} 
+                                    precio={sv.precio} 
+                                    deleteServiceEvent={() => deleteService(sv.nombre)} />
+                                )}
+                                    {services.length === 0 ? (
+                                        <h2 className="warningMessage">Aun no tiene servicios seleccionados</h2>
+                                    ) : (
+                                        <li className="totalServiciosContainer">
+                                            <h2>Total</h2>
+                                            <h3>${totalCost}</h3>
+                                        </li>
+                                        )}
+                                    </ul>
+                                    <div className="selectHorarioFechaWrapper">
+                                        <div className="leyendaCalendarioWrapper">
+                                            <h3>Seleccioná el día y horario</h3>
+                                        </div>
+                                        <div className="calendarioWrapper">
+                                            <DateCalendarMultipleSelect onDateChange={handleDateChange} clearValue={clearDate} checkStatusButtonSubmit = {validateFormFields}/>
+                                        </div>
+                                        <div className="horarioWrapper">
+                                            <HorarioSelect
+                                                checkStatusButtonSubmit = {validateFormFields}
+                                                options={horariosDisponibles}
+                                                clearValue={clearHorario}
+                                                onHorarioChange={setHorarioSeleccionado}  // Manejar cambio de horario
+                                            />
+                                        </div>
+                                            {/* <PaymentComponent totalCost={totalCost} onPaymentSuccess={handlePaymentSuccess} cliente={usuario}/> */}
+                                        </div>
+                                        {/* <div className="wrapperSubmitForm">
+                                        </div> */}
+                                </div>
+                                <div className="wrapperButton">
+                                <button type="button" onClick={goToNextStep}>Continuar</button>
 
-                            {services.length === 0 ? (
-                                <h2 className="warningMessage">Aun no tiene servicios seleccionados</h2>
-                            ) : (
-                                <li className="totalServiciosContainer">
-                                    <h2>Total</h2>
-                                    <h3>${totalCost}</h3>
-                                </li>
-                            )}
-                        </ul>
-                        <div className="selectHorarioFechaWrapper">
-                            <div className="leyendaCalendarioWrapper">
-                                <h3>Seleccioná el día y horario</h3>
+                                </div>
                             </div>
 
-                            <div className="calendarioWrapper">
-                                <DateCalendarMultipleSelect onDateChange={handleDateChange} clearValue={clearDate} />
-                            </div>
-                            <div className="horarioWrapper">
-                                <HorarioSelect
-                                    options={horariosDisponibles}
-                                    clearValue={clearHorario}
-                                    onHorarioChange={setHorarioSeleccionado}  // Manejar cambio de horario
+                            <div className={`panel panel-2 ${step === 2 ? 'active' : ''}`}>
+                                {/* Contenido del Panel 2 - Método de pago */}
+                                <h1 className="seccionTittle">Método de pago</h1>
+                                <MetodoPago 
+                                    checkStatusButtonSubmit = {validateFormFields}
+                                    onMetodoChange={setMetodoPago} 
+                                    onTransferenciaDataChange={setTransferenciaData}
+                                    onTarjetaDataChange={setTarjetaData} 
                                 />
+
+                                <div className="wrapperButton">
+                                    <button type="button" onClick={goToPreviousStep}>Atrás</button>
+
+                                    <button id="buttonSubmitForm" type="submit" disabled={isButtonDisabled}>
+                                        Realizar reserva
+                                    </button>
+
+                                </div>
                             </div>
-                        </div>
-                        <div className="wrapperSubmitForm">
-                            <input id="buttonSubmitForm" type="submit" value="Realizar reserva" disabled={!isFormComplete} />
                         </div>
                     </form>
                 </div>
-            </div>
-            <Footer />
-        </>
+                
+                
+                </div>
+                {/* Mostrar Footer solo si no está logueado */}
+                {!usuario && <Footer />}
+
+        </div>
     );
 }
 
 function Servicio({ nombre, precio, profesional, isSelected, addServiceEvent }) {
     return (
+        <>
         <li className={`serviceItem ${isSelected ? "selected" : ""}`}>
-            {/* <h2>{isSelected}</h2> */}
-            <div className="coreInfoContainer">
-                <div className="containerInfo">
-                    <h2>Servicio</h2>
-                    <h3>{nombre}</h3>
-                </div>
-                <div className="containerInfo">
-                    <h2>Precio</h2>
-                    <h3>${precio}</h3>
-                </div>
-                <div className="containerInfo">
-                    <h2>Profesional</h2>
-                    <h3>{profesional}</h3>
-                </div>
-            </div>
+            
+            <table className="tableDataService">
+                <thead>
+                    <tr>
+                        <th>Servicio</th>
+                        <th>Precio</th>
+                        <th>Profesional</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{nombre}</td>
+                        <td>${precio}</td>
+                        <td>{profesional.nombre}</td>
+                    </tr>
+                </tbody>
+                
+            </table>
             <button className="buttonAdd" onClick={() => addServiceEvent({ profesional, nombre, precio, isSelected })}>{isSelected ? "Quitar" : "Agregar"}</button>
         </li>
+         
+        </>
+        
     )
 }
 
@@ -288,7 +510,7 @@ function ServicioSelected({ nombre, precio, deleteServiceEvent }) {
         <li className="serviceItemSelected">
             <div className="infoItemSelected">
                 <h2>{nombre}</h2>
-                <h3>{precio}</h3>
+                <h3>${precio}</h3>
             </div>
             <img src={deleteIcon} alt="delete icon" onClick={deleteServiceEvent} />
         </li>

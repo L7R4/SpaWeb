@@ -1,72 +1,59 @@
-/* Eliminamos el padding del body para evitar el borde blanco */
-body {
-    margin: 0;
-    background-color: #EDDED2;
-    /* Mismo fondo que el #root */
+.wrapperContentAdminServices{
+    padding: 2rem;
+    width: 100%;
 }
-
-#root {
-    height: 88vh;
-    background-color: #EDDED2;
-    /* Fondo */
-    /* padding: 20px; */
-    /* Espacio dentro del contenedor */
-    overflow: auto;
-    /* margin: 20px; */
-    /* Margen externo para separar el contenedor de los bordes */
-    border-radius: 8px;
-    /* Borde redondeado */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    /* Sombra ligera para destacarlo */
-}
-
-#root::-webkit-scrollbar {
-    width: 6px;
-    border-radius: 5px;
-}
-
-#root::-webkit-scrollbar-thumb {
-    background: #00584A;
-    border-radius: 1rem;
-}
-
-#root::-webkit-scrollbar-thumb:hover {
-    background: #24252590;
-    scale: 1.05;
-}
-
-#root>h1 {
+.wrapperContentAdminServices > h1{
     color: #00584A;
-    font-size: clamp(2rem, 2.1vw, 3rem);
-    margin-bottom: 20px;
+    font-size: clamp(3rem, 2.4vw, 4.5rem);
 }
 
-#root>form {
+.wrapperContentAdminServices > form > .inputsWrapper{
     display: flex;
-    gap: 10px;
-    width: 100%;
-    margin-bottom: 20px;
-    padding: 15px;
-    border-radius: 8px;
+    padding: 1rem;
+    border: 2px solid #00584A;
+    /* justify-content: spa; */
     align-items: center;
-    border: 1px solid #33333386;
+    gap: 2rem;
+    border-radius: .8rem;
+    margin-bottom: 2rem;
 }
 
-#root>form>.inputsWrapper {
-    width: 100%;
-    display: flex;
-    gap: 10px;
-}
-
-#root>form input {
-    width: 23%;
-    padding: 8px;
-    outline: none;
-    border-radius: 8px;
-    border: #00584A 2px solid;
-    font-family: "Poppins";
-    font-size: clamp(10px, 1vw, 15px);
+.wrapperContentAdminServices > form > .inputsWrapper input[type="text"],
+.wrapperContentAdminServices > form > .inputsWrapper input[type="number"]{
     background-color: transparent;
+    color: #00584A;
+    border: 1px solid #00584A;
+    outline: none;
+    padding: .5rem;
+    border-radius: 8px;
+    font-size: clamp(1.4rem, 1.2vw, 1.7rem);
+}
+
+.wrapperContentAdminServices > form > .inputsWrapper> select {
+    background-color: transparent;
+    color: #00584A;
+    border: 1px solid #00584A;
+    padding: .5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: clamp(1.4rem, 1.2vw, 1.7rem);
+}
+
+.wrapperContentAdminServices > form > .inputsWrapper #buttonSubmitServicio{
+    margin-left: auto;
+    font-size: clamp(1.4rem, 1.2vw, 1.7rem);
+
+    background-color: #00584A;
+    color: #EDDED2;
+    padding: .7rem 1.8rem;
+    border-radius: 8px;
+    cursor: pointer;
+    outline: none;
+    border-color: transparent;
+    font-family: "Poppins";
+    height: fit-content;
+    white-space: nowrap;
+    
 }
 
 ul.wrapperListServices {
@@ -111,16 +98,3 @@ ul.wrapperListServices>li>button {
     height: fit-content;
 }
 
-#buttonSubmitServicio {
-    background-color: #00584A;
-    color: #EDDED2;
-    padding: 6px 10px;
-    border-radius: 8px;
-    font-size: clamp(10px, 1vw, 15px);
-    cursor: pointer;
-    outline: none;
-    border-color: transparent;
-    font-family: "Poppins";
-    height: fit-content;
-    white-space: nowrap;
-}

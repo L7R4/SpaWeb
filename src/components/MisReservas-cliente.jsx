@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../../credentials';  // Importar Firestore desde credentials
 import useUsuario from '../hooks/useUsuario';  // Importar el hook personalizado
-import { Header } from './Header.jsx';
-import { Footer } from './Footer.jsx';
 import  Sidebar  from './Sidebar/SideBar.jsx';
 
 export function MisReservas() {
@@ -61,12 +59,12 @@ export function MisReservas() {
     }
 
     return (
-        <>
+        <div className='containerLoged'>
             <Sidebar />
-            <div id="misReservas">
+            <div className="misReservasWrapper">
                 <h2>Mis Reservas</h2>
-                <div className="table-container">
-                    <table>
+                <div>
+                    <table className="tableDataMisReservas">
                         <thead>
                             <tr>
                                 <th>Fecha</th>
@@ -80,7 +78,7 @@ export function MisReservas() {
                                 <tr key={reserva.id}>
                                     <td>{reserva.fecha}</td>
                                     <td>{reserva.horario}</td>
-                                    <td>{reserva.services.map((servicio) => `${servicio.nombre} - ${servicio.precio}`).join(", ")}</td>
+                                    <td>{reserva.services.map((servicio) => `${servicio.nombre}  $${servicio.precio}`).join(" - ")}</td>
                                     <td>${reserva.costoTotal}</td>
                                 </tr>
                             ))}
@@ -93,7 +91,6 @@ export function MisReservas() {
                     </table>
                 </div>
             </div>
-            <Footer />
-        </>
+        </div>
     );
 }

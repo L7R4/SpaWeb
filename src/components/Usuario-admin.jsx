@@ -2,8 +2,7 @@ import { db } from '../../credentials'; // Asegúrate de importar Firestore corr
 import React, { useState, useEffect } from 'react';
 import { collection, getDocs, doc, updateDoc } from 'firebase/firestore';
 import Swal from 'sweetalert2'; // Importar SweetAlert
-import { Header } from './Header.jsx';
-import { Footer } from './Footer.jsx';
+import Sidebar  from './Sidebar/SideBar.jsx';
 
 export function UsuarioAdmin() {
     const [usuarios, setUsuarios] = useState([]);
@@ -67,11 +66,11 @@ export function UsuarioAdmin() {
     }, []);
 
     return (
-        <>
-            <Header />
+        <div className='containerLoged'>
+            <Sidebar />
             <div className="usuario-admin">
                 <h1>Administración de Usuarios</h1>
-                <table className="usuario-table">
+                <table className="tableDataUsuarios">
                     <thead>
                         <tr>
                             <th>Email</th>
@@ -106,7 +105,6 @@ export function UsuarioAdmin() {
                     </button>
                 )}
             </div>
-            <Footer />
-        </>
+        </div>
     );
 }

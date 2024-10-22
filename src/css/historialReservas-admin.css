@@ -1,25 +1,73 @@
-/* #root {
-    height: 88vh;
-    background-color: #EDDED2;
-} */
 
-.empleo-admin {
-    /* background-color: #aa7e7e; */
+/* .empleo-admin {
     padding: 20px;
     border-radius: 10px;
-    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
     width: 80%;
-    /* max-width: 900px; */
 }
 
 .empleo-admin h1 {
     color: #00584A;
     font-size: clamp(2rem, 2.1vw, 3rem);
     margin-bottom: 20px;
-    /* text-align: center; */
+} */
+.reservas-admin {
+    padding: 2rem;
+    width: 100%;
+}
+.reservas-admin > h1{
+    color: #00584A;
+    font-size: clamp(3rem, 2.4vw, 4.5rem);
 }
 
-table {
+.reservas-admin > .filtros{
+    display: flex;
+    padding: 1rem;
+    border: 2px solid #00584A;
+    /* justify-content: spa; */
+    align-items: center;
+    gap: 2rem;
+    border-radius: .8rem;
+    margin-bottom: 2rem;
+}
+
+.reservas-admin > .filtros > div{
+    display: flex;
+    flex-direction: column;
+}
+
+.reservas-admin > .filtros > div > label{
+    font-size: clamp(1.4rem, 1.2vw, 1.7rem);
+    color: #00584A;
+    font-weight: 600;
+}
+.reservas-admin > .filtros > div input[type="text"]{
+    background-color: transparent;
+    color: #00584A;
+    border: 1px solid #00584A;
+    outline: none;
+    padding: .5rem;
+    border-radius: 8px;
+    font-size: clamp(1.4rem, 1.2vw, 1.7rem);
+}
+
+.reservas-admin > .filtros > div > select {
+    background-color: #00584A;
+    color: #ffffff;
+    border: none;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: clamp(1.4rem, 1.2vw, 1.7rem);
+}
+
+.filtros > #buttonExportData{
+    margin-left: auto;
+    font-size: clamp(1.4rem, 1.2vw, 1.7rem);
+
+}
+
+
+table.tableDataReservas {
     width: 100%;
     border-collapse: collapse;
     background-color: #FFFFFF;
@@ -28,39 +76,39 @@ table {
     overflow: hidden;
 }
 
-thead {
+table.tableDataReservas thead {
     background-color: #00584A;
     color: #FFFFFF;
 }
 
-th,
-td {
+table.tableDataReservas th,
+table.tableDataReservas td {
     padding: 15px;
     text-align: left;
     border-bottom: 1px solid #55887B;
 }
 
-td {
+table.tableDataReservas td {
     font-size: clamp(1.2rem, 1.1vw, 1.5rem);
     /* cursor: pointer; */
 }
 
-td>ul {
+table.tableDataReservas td>ul {
     list-style-type: none;
 }
 
-th {
+table.tableDataReservas th {
     font-size: clamp(1.5rem, 1.3vw, 1.8rem);
 
 }
 
-tbody tr:nth-child(even) {
+table.tableDataReservas tbody tr:nth-child(even) {
     background-color: #f5c6b56c;
     /* Color alternativo para filas */
 }
 
 
-button {
+/* button {
     background-color: #00584A;
     color: #FFFFFF;
     border: none;
@@ -72,13 +120,13 @@ button {
     transition: background-color 0.1s ease;
     font-size: clamp(1.2rem, 1vw, 1.4rem);
 
-}
+} */
 
 button:hover {
     background-color: #55887B;
 }
 
-td[colspan="3"] {
+table.tableDataReservas td[colspan="3"] {
     text-align: center;
     font-style: italic;
     color: #00584A;

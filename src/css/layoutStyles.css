@@ -21,7 +21,37 @@ html {
 
 }
 
+#root {
+    background: #EDDED2;
+}
 
+/* 
+#root::-webkit-scrollbar {
+    width: 6px;
+    border-radius: 5px;
+}
+
+#root::-webkit-scrollbar-thumb {
+    background: #00584A;
+    border-radius: 1rem;
+}
+
+#root::-webkit-scrollbar-thumb:hover {
+    background: #24252590;
+    scale: 1.05;
+} */
+.containerLoged{
+    display: flex;
+    width: 100%;
+}
+
+.containerLoged > .wrapperContent{
+    width: 100%;
+    padding: 3rem;
+}
+
+
+/* #region Header */
 header>.wrapperLinkLogo {
     text-decoration: none;
     cursor: pointer;
@@ -113,6 +143,108 @@ nav>ul>li#itemLogin:hover {
 
 /* #endregion */
 
+
+/* #region SideBar */
+.containerLoged > aside{
+    min-width: 10rem;
+    height: 100vh;
+    padding: 1rem;
+
+}
+.containerLoged > aside #buttonShowSideBar,
+.containerLoged > aside #buttonHiddenSideBar{
+    min-width: 4rem;
+    min-height: 4rem;
+    max-width: 6rem;
+    max-height: 6rem;
+    position: fixed;
+    background-color: transparent;
+    outline: none;
+    width: 3.5vw;
+    height: 3.5vw;
+    padding: 0;
+}
+.containerLoged > aside #buttonHiddenSideBar{
+    position: unset;
+}
+.containerLoged > aside> #buttonShowSideBar > img,
+.containerLoged > aside #buttonHiddenSideBar> img{
+    width: 100%;
+    height: 100%;
+}
+
+
+  
+  .sidebar-nav {
+    background: #00584A;
+    width: 20vw;
+    max-width: 40rem;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    transition: all .2s ease;
+    z-index: 100;
+  }
+  
+  .sidebar-nav.active {
+    left: 0;
+  }
+  
+  .sidebar-wrap {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 6rem;
+    font-size: clamp(1.5rem, 1.5vw, 2rem);
+    color: #EDDED2;
+    padding: 3rem;
+  }
+  .sidebar-wrap > ul{
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+  .list-item {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 2rem;
+  }
+  
+  .list-item img {
+    width: 15%;
+    max-width: 3.5rem;
+  }
+  
+  .user-profile-sideBar {
+    position: relative;
+    margin-top: auto;
+  }
+  
+  
+  .user-menu-sideBar {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  #buttonLogout-sideBar{
+    background-color: transparent;
+    padding: .4rem 2rem;
+    border: none;
+    font-size: clamp(1.5rem, 1.5vw, 2rem);
+    background-color: #EDDED2;
+    color: #00584A;
+    outline: none;
+    cursor: pointer;
+  }
+
+/* #endregion */
+
 /*#region FOOTER*/
 .footer {
     background-color: #00584A;
@@ -177,8 +309,8 @@ nav>ul>li#itemLogin:hover {
 
 /*#endregion  */
 
-/* #region menu Profile */
 
+/* #region menu Profile */
 
 .user-profile {
     position: relative;
@@ -227,6 +359,8 @@ nav>ul>li#itemLogin:hover {
 
 /* #endregion */
 
+
+/* #region Libreria de popups */
 .swal2-popup * {
     font-size: clamp(14px, 1.1vw, 17px) !important;
 
@@ -239,3 +373,5 @@ nav>ul>li#itemLogin:hover {
 .swal2-popup .swal2-icon-content {
     font-size: clamp(18px, 1.6vw, 25px) !important;
 }
+
+/* #endregion */

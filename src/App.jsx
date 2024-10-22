@@ -13,6 +13,8 @@ import { UsuarioAdmin } from "./components/Usuario-admin";
 import { ListadoClientes } from "./components/ListadoClientes";
 import { ServicioAdmin } from "./components/Servicio-admin";
 import { Empleo } from "./components/Empleo";
+import { ListadoPagos } from "./components/ListadoPagos";
+
 
 
 
@@ -37,8 +39,7 @@ function App() {
           <Route path="/usuarios" element={<UsuarioAdmin />} />
           <Route path="/servicios" element={<ServicioAdmin />} />
           <Route path="/listado_clientes" element={<ListadoClientes />} />
-
-
+          <Route path="/listado_pagos" element={<ListadoPagos />} />
         </Routes>
 
       </BrowserRouter>

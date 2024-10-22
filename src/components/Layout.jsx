@@ -2,15 +2,12 @@ import React from 'react';
 import { Header } from './Header.jsx';
 import { Footer } from './Footer.jsx';
 import { SliderCard } from './SliderCard.jsx';
-import  Sidebar  from './Sidebar/SideBar.jsx';
-
 
 export function Layout() {
 
     return (
         <>
-            <Sidebar/>
-            
+            <Header/>            
             <div className="wrapperMain">
 
                 <main className="seccion-home">

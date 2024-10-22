@@ -2,8 +2,7 @@ import { db, storage } from '../../credentials.js'; // Asegúrate de que estos i
 import React, { useState, useEffect } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 // import { ref, getDownloadURL } from 'firebase/storage';
-import { Header } from './Header.jsx';
-import { Footer } from './Footer.jsx';
+import Sidebar  from './Sidebar/SideBar.jsx';
 
 export function EmpleoAdmin() {
     const [solicitudes, setSolicitudes] = useState([]);
@@ -37,11 +36,11 @@ export function EmpleoAdmin() {
     };
 
     return (
-        <>
-            <Header />
+        <div className='containerLoged'>
+            <Sidebar />
             <div className="empleo-admin">
                 <h1>Solicitudes de Empleo</h1>
-                <table>
+                <table className='tableDataEmpleos'>
                     <thead>
                         <tr>
                             <th>Nombre</th>
@@ -70,8 +69,7 @@ export function EmpleoAdmin() {
                     </tbody>
                 </table>
             </div>
-            <Footer />
-        </>
+        </div>
 
     );
 }

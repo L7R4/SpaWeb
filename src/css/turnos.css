@@ -1,32 +1,23 @@
-#root {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    background-color: #EDDED2;
-}
 
 .wrapper {
     display: flex;
-    /* flex: 1 0 auto; */
-    /* Permite que el wrapper ocupe el espacio restante */
-    /* overflow-y: auto; */
     justify-content: space-between;
     gap: 3rem;
-    height: 88vh;
+    min-height: 100vh; /* El wrapper siempre tiene al menos la altura de la ventana */
+    height: auto; /* Ajusta la altura en función del contenido */
     background-color: #EDDED2;
-    /* padding: 20px 0; */
-
 }
 
-.wrapper>div {
+.wrapper > div {
     padding: 3rem;
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
-    height: 100%;
-    overflow-y: auto;
+    flex-grow: 1; /* Permite que los hijos se expandan si es necesario */
+    /* min-height: 100%; Los hijos ocuparán el mínimo necesario, evitando scroll interno */
+    height: auto; /* Deja que los hijos crezcan según el contenido */
+    overflow: hidden;
 }
 
 .wrapper>div>ul {
@@ -35,19 +26,62 @@
 }
 
 .wrapper>div h1.seccionTittle {
-    font-size: clamp(2rem, 3vw, 3rem);
+    font-size: clamp(2.4rem, 3vw, 3.6rem);
     color: #00584A;
 }
 
 /*#region Container para manejar los turnos   */
 .wrapper>.turnosSideManagementContainer {
-    width: 30%;
+    border-radius: 1rem;
     background-color: #F5C6B5;
-    max-width: 500px;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
+    width: 35%;
+    max-height: 900px;
 
 }
+
+.booking-container {
+    position: relative;
+    /* overflow: hidden; */
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.panel {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    overflow-y: auto;
+    transition: transform 0.5s ease;
+}
+
+
+.panel-1 {
+    transform: translateX(-110%);
+}
+
+.panel-2 {
+    transform: translateX(110%);
+}
+
+.panel.active{
+    transform: translateX(0);
+
+}
+.wrapperButton {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    justify-content: center;
+    margin-top: auto;
+}
+
+
+
 
 .wrapper>.turnosSideManagementContainer ul {
     display: flex;
@@ -74,8 +108,6 @@
     width: 90%;
     gap: 1rem;
     border-radius: 8px;
-    color: #00584A;
-    font-size: clamp(10px, 1vw, 14px);
 }
 
 .wrapper>.turnosSideManagementContainer ul li.serviceItemSelected>img {
@@ -88,6 +120,15 @@
     width: 100%;
     justify-content: space-between;
 
+}
+
+.wrapper>.turnosSideManagementContainer ul li.serviceItemSelected>.infoItemSelected >h2{
+    color: #00584A;
+    font-size: clamp(1.4rem, 1.2vw, 2rem);
+}
+.wrapper>.turnosSideManagementContainer ul li.serviceItemSelected>.infoItemSelected >h3{
+    color: #00584A;
+    font-size: clamp(1.3rem, 1.2vw, 1.8rem);
 }
 
 /* #region Estilos calendario */
@@ -116,24 +157,26 @@
 }
 
 /* #endregion */
+
 #formRequestServicios {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
+    height: 100%;
 }
 
 .totalServiciosContainer {
     display: flex;
     background-color: #EDDED2;
-    padding: 10px 20px;
+    padding: 1rem 2rem;
     justify-content: space-between;
     align-items: center;
     width: 90%;
     gap: 1rem;
     border-radius: 8px;
     color: #00584A;
-    font-size: clamp(10px, 1vw, 14px);
+    font-size: clamp(1.3rem, 1.2vw, 1.5rem);
     border: 2px solid #00584A;
 }
 
@@ -159,10 +202,11 @@
 
 .leyendaCalendarioWrapper,
 .leyendaServiciosSelccionadosWrapper {
-    width: 90%;
+    width: 100%;
     border-radius: 8px;
     color: #00584A;
     font-size: clamp(10px, 1.2vw, 18px);
+    margin-bottom: 1rem;
 }
 
 .wrapperSubmitForm {
@@ -192,11 +236,97 @@
     pointer-events: none;
 }
 
+.panel > div.metodoPago > h3{
+    font-size: clamp(1.5rem, 1.3vw, 2rem);
+    color: #00584A;
+    
+}
+.panel > div.metodoPago > .metodosOptionsWrapper{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+    margin: 2rem 0;
+}
+.panel > div.metodoPago > .metodosOptionsWrapper label{
+    padding: 1rem 2rem;
+    border-radius: .6rem;
+    border: 2px solid #00584A;
+    font-weight: 600;
+    font-size: clamp(1.2rem, 1.1vw, 1.6rem);
+    color: #00584A;
+    cursor: pointer;
+}
+.panel > div.metodoPago > .metodosOptionsWrapper > input{
+    display: none;
+}
+.panel > div.metodoPago > .metodosOptionsWrapper > input:checked + label{
+    /* display: none; */
+    background-color: #00584A;
+    color: #EDDED2;
+}
+.panel > div.metodoPago > .transferenciaForm > .payInformationWrapper{
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    font-size: clamp(1.3rem, 1.3vw, 1.8rem);
+    color: #00584A;
+    margin-bottom: 2.4rem;
+}
+
+.panel > div.metodoPago > .transferenciaForm > #comprobante{
+    display: none;
+}
+
+.panel > div.metodoPago > .transferenciaForm > label{
+    font-size: clamp(1.3rem, 1.3vw, 1.8rem);
+    padding: 1rem 2rem;
+    background-color: #EDDED2;
+    color: #00584A;
+    margin: 0 auto;
+    border-radius: .6rem;
+    width: 70%;
+    display: block;
+    cursor: pointer;
+}
+
+.panel > div.metodoPago > .transferenciaForm > .fileNamePTag{
+    font-size: clamp(1rem, 1vw, 1.5rem);
+    color: #005849;
+    margin-top: .5rem;
+}
+
+.panel > div.metodoPago > .tarjetaForm > div{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    align-items: center;
+}
+
+.panel > div.metodoPago > .tarjetaForm > div > label{
+    font-size: clamp(1rem, 1vw, 1.5rem);
+    color: #005849;
+    font-weight: 600;
+}
+.panel > div.metodoPago > .tarjetaForm > div > input{
+    border: 1px solid #005849;
+    outline: none;
+    background-color: transparent;
+    height: 3.3rem;
+    width: 70%;
+    border-radius: .6rem;
+    font-size: clamp(1rem, 1vw, 1.5rem);
+    color: #005849;
+    padding: 1rem;
+}
 /* #endregion */
 
 /* #region Container de la lista de turnos */
+
+
 .wrapper>.listServiciosContainer {
-    width: 70%;
+    width: 65%;
+    height: fit-content;
 }
 
 .wrapper>.listServiciosContainer>ul {
@@ -210,7 +340,7 @@
     display: flex;
     align-items: center;
     color: #00584A;
-    width: 80%;
+    width: 100%;
     padding: 10px 15px;
     border-radius: 8px;
     border: 2px solid #00584A;
@@ -219,8 +349,9 @@
 
 .wrapper>.listServiciosContainer>ul>li.serviceItem.selected {
     background-color: #00584A;
-    color: #EDDED2;
 }
+
+
 
 .wrapper>.listServiciosContainer>ul>li.serviceItem>.buttonAdd {
     background-color: #00584A;
@@ -261,6 +392,30 @@
     max-height: 250px;
 }
 
+.serviceItem > table.tableDataService{
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 8px;
+    border: none;
+    overflow: hidden;
+}
+
+table.tableDataService th,
+table.tableDataService td {
+    padding: .5rem;
+    text-align: left;
+    font-size: clamp(1.5rem, 1.3vw, 2rem);
+    width: 40%;
+}
+table.tableDataService th:nth-child(2),
+table.tableDataService td:nth-child(2) {
+    width: 20%;
+
+}
+.wrapper>.listServiciosContainer>ul>li.serviceItem.selected > table.tableDataService *{
+    color: #EDDED2;
+    
+}
 /* #endregion */
 
 .swal2-popup * {
