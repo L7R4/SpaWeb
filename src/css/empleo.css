@@ -1,4 +1,3 @@
-
 .empleo {
     background-color: #EDDED2;
     height: 88vh;
@@ -39,6 +38,7 @@
 .empleo h2 {
     font-size: 4rem;
     color: #00584A;
+    text-align: center;
 }
 
 textarea {
@@ -122,4 +122,28 @@ form .upload-cv label {
 .mensaje-error {
     color: red;
     margin-top: 1.5rem;
+}
+@media (max-width: 768px) {
+    .empleo-contenedor {
+        flex-direction: column;
+        padding: 2rem;
+        border-radius: 2rem;
+        min-width: auto;
+        min-height: auto;
+        margin-bottom: 2rem; /* Añade un margen inferior al contenedor */
+    }
+
+    .boton-enviar {
+        font-size: 1.4rem;
+        padding: 0.5rem 1.5rem;
+    }
+
+    .empleo h2 {
+        font-size: 2.5rem;
+    }
+
+    .enviar-boton-container {
+        margin-top: 2rem; /* Asegura espacio antes del footer */
+        margin-bottom: 3rem; /* Añade espacio adicional debajo del botón */
+    }
 }
