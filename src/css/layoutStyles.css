@@ -25,6 +25,16 @@ html {
     background: #EDDED2;
 }
 
+.containerLoged{
+    display: flex;
+    width: 100%;
+}
+
+.containerLoged > .wrapperContent{
+    width: 100%;
+    padding: 3rem;
+}
+
 /* 
 #root::-webkit-scrollbar {
     width: 6px;
@@ -40,15 +50,7 @@ html {
     background: #24252590;
     scale: 1.05;
 } */
-.containerLoged{
-    display: flex;
-    width: 100%;
-}
 
-.containerLoged > .wrapperContent{
-    width: 100%;
-    padding: 3rem;
-}
 
 
 /* #region Header */
