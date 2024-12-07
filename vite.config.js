@@ -9,6 +9,9 @@ export default defineConfig({
     VitePWA({
       manifest, // Usa el archivo separado
       registerType: 'autoUpdate',
+      workbox: {
+        navigateFallback: '/iniciar_sesion', // Página por defecto
+      },
       includeAssets: ['favicon.svg', 'robots.txt', 'apple-touch-icon.png']
     }),
   ],
