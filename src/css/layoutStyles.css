@@ -52,6 +52,49 @@ html {
 } */
 
 
+/* #region Instalar app boton */
+.panelInstallAppWrapper{
+    position: fixed;
+    background-color: #000;
+    padding: 2rem;
+    width: fit-content;
+    max-width: 20vw;
+    right: 0;
+    top: 15vh;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: .6rem;
+}
+
+.panelInstallAppWrapper>h3{
+    color: #EDDED2;
+    font-weight: 400;
+    font-size: clamp(1rem, 1.1vw, 1.3rem);
+    font-family: poppins;
+    text-align: center;
+}
+.panelInstallAppWrapper>h3.textAction{
+    font-weight: 600;
+    font-size: clamp(1rem, 1.1vw, 1.4rem);
+}
+
+.panelInstallAppWrapper>.install-button{
+    margin-top: 1rem;
+    width: 100%;
+    height: 4rem;
+    padding: 0;
+    padding: .7rem;
+}
+
+.panelInstallAppWrapper>.install-button > img{
+    width: 100%;
+    height: 100%;
+}
+
+/* #endregion */
 
 /* #region Header */
 header>.wrapperLinkLogo {
@@ -251,7 +294,9 @@ nav>ul>li#itemLogin:hover {
 .footer {
     background-color: #00584A;
     display: flex;
-    column-gap: 27rem;
+    justify-content: center;
+    flex-wrap: wrap ;
+    /* column-gap: 27rem; */
     align-items: center;
     color: #F5C6B5;
     padding: 2rem 5rem 2rem 5rem;
@@ -266,11 +311,10 @@ nav>ul>li#itemLogin:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 33%;
+    max-width: 26rem;
 }
 
-.footer-section:nth-child(3) {
-    margin-left: auto;
-}
 
 .footer-section h3 {
     font-size: 1.6rem;
@@ -374,6 +418,20 @@ nav>ul>li#itemLogin:hover {
 
 .swal2-popup .swal2-icon-content {
     font-size: clamp(18px, 1.6vw, 25px) !important;
+}
+
+/* #endregion */
+
+
+
+/* #region NavBar PWA */
+
+.bottomNavWrapper{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #EDDED2;
+    height: 6rem;
 }
 
 /* #endregion */
